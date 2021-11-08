@@ -10,6 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../CSS/registration.css">
+    <script src="../JavaScript/registration.js" type="text/javascript"></script>
+
 </head>
 <body>
     <section class="Form my-4 mx-5">
@@ -30,65 +32,18 @@
                         <div class="form-row">
                             <div class="col-lg-7">
                                 <h7>Insert a password</h7>
-                                <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+                                <input type="password" onkeydown="passwordCheck()" id="password" name="password" placeholder="Password" class="form-control" required>
                                 <p id="msg1">The password is <span id="strength"></span></p>
                             </div>
-                            <script>
-                                var pass = document.getElementById("password");
-                                var msg = document.getElementById("msg1");
-                                var str = document.getElementById("strength");
 
-                                pass.addEventListener("input", () => {
-                                    if (pass.value.length > 0) {
-                                        msg.style.display = "block";
-                                    } else {
-                                        msg.style.display = "none";
-                                    }
-
-                                    if(pass.value.length < 4) {
-                                        str.innerHTML = "weak";
-                                        pass.style.borderColor = "red";
-                                        msg.style.color = "red";
-                                    } else if (pass.value.length >= 4 && pass.value.length < 8){
-                                        str.innerHTML = "medium";
-                                        pass.style.borderColor = "yellow";
-                                        msg.style.color = "yellow";
-                                    } else {
-                                        str.innerHTML = "strong";
-                                        pass.style.borderColor = "green";
-                                        msg.style.color = "green";
-                                    }
-                                })
-                            </script>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
                                 <h7>Repeat password</h7>
-                                <input type="password" id="rPassword" name="rPassword" placeholder="Password" class="form-control" required>
+                                <input type="password" onkeydown="equalsPassword()" id="rPassword" name="rPassword" placeholder="Password" class="form-control" required>
                                 <p id="msg2"><span id="equals"></span></p>
                             </div>
-                            <script>
-                                var pass1 = document.getElementById("password");
-                                var pass2 = document.getElementById("rPassword");
-                                var msg1 = document.getElementById("msg2");
-                                var str1 = document.getElementById("equals");
 
-                                pass2.addEventListener("input", () => {
-                                    if (pass2.value.length > 0) {
-                                        msg1.style.display = "block";
-                                    } else {
-                                        msg1.style.display = "none";
-                                    }
-
-                                    if (pass1.value === pass2.value) {
-                                        str1.innerHTML = "Passwords are equal";
-                                        msg1.style.color = "green";
-                                    } else {
-                                        str1.innerHTML = "Passwords are not equal";
-                                        msg1.style.color = "red";
-                                    }
-                                })
-                            </script>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
@@ -100,6 +55,6 @@
             </div>
         </div>
     </section>
-<a href=""
+
 </body>
 </html>
