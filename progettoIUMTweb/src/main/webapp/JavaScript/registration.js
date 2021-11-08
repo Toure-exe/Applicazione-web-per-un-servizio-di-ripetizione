@@ -52,4 +52,14 @@ function equalsPassword() {
             msg1.style.color = "red";
         }
     })
+
+    pass1.addEventListener("input", () => {
+        if (pass1.value === pass2.value) {
+            str1.innerHTML = "Passwords are equal";
+            msg1.style.color = "green";
+        } else {
+            str1.innerHTML = "Passwords are not equal";
+            msg1.style.color = "red";
+        }
+    })
 }
