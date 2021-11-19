@@ -49,11 +49,16 @@ public class MainServlet extends HttpServlet {
                 case "login":
                     email = request.getParameter("email");
                     password = request.getParameter("password");
-                    if (dao.searchUser(email, password)){
-                        out.println("User found");
+                    if (dao.searchUser(email, password)) {
+                        System.out.println("user found");
                         processRequest(request, response, email);
-                    } else
-                        out.println("User not found");
+                    } else {
+                        System.out.println("User not found");
+                        ServletContext ctx = getServletContext();
+                        RequestDispatcher rd = ctx.getRequestDispatcher("/login.html");
+                        rd.forward(request, response);
+
+                    }
                     break;
 
                 case "logout":
@@ -69,25 +74,17 @@ public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response, String email) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession s = request.getSession();
-        if (email != null)
-            s.setAttribute("email", email);
         PrintWriter out = response.getWriter();
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>User Session</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<p>Sei collegato come: " + s.getAttribute("email") + "</p>");
-            out.println("<form action=\"/progettoIUMTweb_war_exploded/MainServlet\" method=\"post\">");
-            out.println("<button type=\"submit\" name=\"submit\" value=\"logout\">Logout</button>");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+        HttpSession s = request.getSession();
+        if (email != null){
+            s.setAttribute("email", email);
+            ServletContext ctx = getServletContext();
+            RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
+            rd.forward(request, response);
+
         }
+
+
     }
 
     private void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -95,18 +92,9 @@ public class MainServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         session.invalidate();
-        try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Life1</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<p>You are successfully logged out!</p>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
+        ServletContext ctx = getServletContext();
+        RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
+        rd.forward(request, response);
     }
 
 }
