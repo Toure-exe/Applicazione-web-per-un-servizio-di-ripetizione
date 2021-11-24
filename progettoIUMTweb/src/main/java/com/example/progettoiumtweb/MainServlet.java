@@ -29,10 +29,12 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        System.out.println("ENTRA");
         try (PrintWriter out = response.getWriter()) {
+            System.out.println("ENTRA1");
             String act = request.getParameter("submit");
             String email, password, rPassword;
+            System.out.println(act);
             switch(act) {
                 case "registration":
                     email = request.getParameter("email");
@@ -51,14 +53,13 @@ public class MainServlet extends HttpServlet {
                     password = request.getParameter("password");
                     if (dao.searchUser(email, password)) {
                         System.out.println("user found");
+                        out.println(1); //write the JSONArray to the response
                         processRequest(request, response, email);
                     } else {
                         System.out.println("User not found");
-                        ServletContext ctx = getServletContext();
-                        RequestDispatcher rd = ctx.getRequestDispatcher("/login.html");
-                        rd.forward(request, response);
-
+                        out.println(0); //write the JSONArray to the response
                     }
+                    out.close();
                     break;
 
                 case "logout":
@@ -73,18 +74,14 @@ public class MainServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response, String email) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        System.out.println("p1");
         HttpSession s = request.getSession();
+        System.out.println(email);
         if (email != null){
+            System.out.println("p4");
             s.setAttribute("email", email);
-            ServletContext ctx = getServletContext();
-            RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
-            rd.forward(request, response);
-
         }
-
-
+        System.out.println("p3");
     }
 
     private void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,9 +89,6 @@ public class MainServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         session.invalidate();
-        ServletContext ctx = getServletContext();
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
-        rd.forward(request, response);
     }
 
 }

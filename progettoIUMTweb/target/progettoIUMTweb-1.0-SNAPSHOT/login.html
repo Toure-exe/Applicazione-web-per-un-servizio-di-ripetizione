@@ -10,6 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="CSS/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -22,7 +24,7 @@
                 <div class="col-lg-7 px-5 pt-5">
                     <h1 class="font-weight-bold py-3">Login</h1>
                     <h4>Sign into your account</h4>
-                    <form action="/progettoIUMTweb_war_exploded/MainServlet" method="post">
+                    <form method="post">
                         <div class="form-row">
                             <div class="col-lg-7">
                                 <input id="email" type="email" name="email" placeholder="Email-Address" class="form-control my-3 p-4" required>
@@ -38,12 +40,37 @@
                                 <button id="login" type="submit" name="submit" value="login" class="btn1 mt-3 mb-5">Login</button>
                             </div>
                         </div>
-                        <p id="error"></p>
+
                         <p>Don't have an account? <a href="registration.html">Register here</a></p>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+<script>
+    $(document).ready(function () {
+        $("#login").click(function (event) {
+            let email = document.getElementById("email").value;
+            let psw = document.getElementById("psw").value;
+            $.ajax({
+                url : "MainServlet", // Url of backend (can be python, php, etc..)
+                type: "POST", // data type (can be get, post, put, delete)
+                data : {submit: "login", email: email, password: psw}, // data in json format
+                async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+                success: function(data) {
+                    console.log("risultato data: " + data + "tipo: " + typeof data);
+                    let res = Number(data);
+                    if(res === 0){
+                        alert("User not found");
+                    } else if(res === 1) {
+                        console.log("entra");
+                        event.preventDefault();
+                        window.location = "index.html";
+                    }
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

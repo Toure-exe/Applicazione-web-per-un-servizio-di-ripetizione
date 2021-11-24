@@ -1,6 +1,3 @@
-//verifica quanto la pws è sicura, non funziona esternamente, internamente a HTML funziona correttamente
-
-
 function passwordCheck() {
     let pass = document.getElementById("password");
     let msg = document.getElementById("msg1");
