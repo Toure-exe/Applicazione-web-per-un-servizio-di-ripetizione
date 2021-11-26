@@ -10,6 +10,7 @@ import DAO.*;
 @WebServlet(name = "MainServlet", value = "/MainServlet")
 public class MainServlet extends HttpServlet {
     DAO dao = null;
+    HttpSession session = null;
 
     public void init(ServletConfig conf) throws ServletException{
         super.init(conf);
@@ -51,10 +52,11 @@ public class MainServlet extends HttpServlet {
                 case "login":
                     email = request.getParameter("email");
                     password = request.getParameter("password");
-                    if (dao.searchUser(email, password)) {
+                    int result = dao.searchUser(email, password);
+                    if (result >= 0 && result <= 2) {
                         System.out.println("user found");
                         out.println(1); //write the JSONArray to the response
-                        processRequest(request, response, email);
+                        processRequest(request, response, email, result);
                     } else {
                         System.out.println("User not found");
                         out.println(0); //write the JSONArray to the response
@@ -66,6 +68,22 @@ public class MainServlet extends HttpServlet {
                     processLogout(request, response);
                     break;
 
+                case "indexSession":
+                    if(this.session != null){
+                        out.print("Welcome " + this.session.getAttribute("email"));
+                    } else {
+                        out.print("Welcome guest");
+                    }
+                    System.out.println("sessioneprova");
+                    break;
+
+                case "getRoleSession":
+                    if (session == null)
+                        out.print(0);
+                    else
+                        out.print(this.session.getAttribute("role"));
+                    break;
+
                 default:
                     System.out.println("Error.");
                     break;
@@ -73,13 +91,14 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response, String email) throws ServletException, IOException {
-        System.out.println("p1");
-        HttpSession s = request.getSession();
+    private void processRequest(HttpServletRequest request, HttpServletResponse response, String email, int role) throws ServletException, IOException {
+        System.out.println(role);
+        this.session = request.getSession();
         System.out.println(email);
         if (email != null){
             System.out.println("p4");
-            s.setAttribute("email", email);
+            this.session.setAttribute("email", email);
+            this.session.setAttribute("role", role);
         }
         System.out.println("p3");
     }
@@ -87,8 +106,8 @@ public class MainServlet extends HttpServlet {
     private void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        session.invalidate();
+        this.session.invalidate();
+        this.session = null;
     }
 
 }

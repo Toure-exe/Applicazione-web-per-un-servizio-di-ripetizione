@@ -47,9 +47,9 @@ public class DAO {
         }
     }
 
-    public boolean searchUser(String email, String password) {
+    public int searchUser(String email, String password) {
         Connection conn1 = null;
-        boolean result = false;
+        int result = -1;
         try {
             conn1 = DriverManager.getConnection(url, user, pwd);
             if (conn1 != null)
@@ -60,9 +60,9 @@ public class DAO {
             System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if(!rs.isBeforeFirst())
-                result = false;
-            else
-                result = true;
+                result = -1;
+            else if (rs.next())
+                result = Integer.parseInt(rs.getString("ruolo"));
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
