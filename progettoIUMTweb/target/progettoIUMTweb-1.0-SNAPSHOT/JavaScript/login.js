@@ -3,7 +3,7 @@ $(document).ready(function () {
         let email = document.getElementById("email").value;
         let psw = document.getElementById("psw").value;
         $.ajax({
-            url : "MainServlet", // Url of backend (can be python, php, etc..)
+            url : "SessionServlet", // Url of backend (can be python, php, etc..)
             type: "POST", // data type (can be get, post, put, delete)
             data : {submit: "login", email: email, password: psw}, // data in json format
             async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)

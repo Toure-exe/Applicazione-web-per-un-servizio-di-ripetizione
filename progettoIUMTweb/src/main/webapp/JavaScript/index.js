@@ -7,7 +7,7 @@ $(document).ready(function () {
             guest: true,
             student: false,
             admin: false,
-            link: '/progettoIUMTweb_war_exploded/MainServlet'
+            link: '/progettoIUMTweb_war_exploded/SessionServlet'
         },
         mounted() {
             this.sessionFunction();
@@ -17,17 +17,18 @@ $(document).ready(function () {
             sessionFunction:function(){
                 var self = this;
                 $.ajax({
-                    url : "MainServlet", // Url of backend (can be python, php, etc..)
+                    url : "SessionServlet", // Url of backend (can be python, php, etc..)
                     type: "POST", // data type (can be get, post, put, delete)
                     data : {submit: "indexSession"}, // data in json format
                     async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
                     success: function(data) {
+                        console.log(data);
                         self.session = data;
                     }
                 });
                 var self1 = this;
                 $.ajax({
-                    url : "MainServlet", // Url of backend (can be python, php, etc..)
+                    url : "SessionServlet", // Url of backend (can be python, php, etc..)
                     type: "POST", // data type (can be get, post, put, delete)
                     data : {submit: "getRoleSession"}, // data in json format
                     async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
@@ -51,6 +52,18 @@ $(document).ready(function () {
                                 self1.admin = true;
                                 break;
                         }
+                    }
+                });
+            },
+            logout: function (){
+                $.ajax({
+                    url : "SessionServlet", // Url of backend (can be python, php, etc..)
+                    type: "POST", // data type (can be get, post, put, delete)
+                    data : {submit: "logout"}, // data in json format
+                    async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+                    success: function(data) {
+                        console.log(data);
+                        location.reload();
                     }
                 });
             }

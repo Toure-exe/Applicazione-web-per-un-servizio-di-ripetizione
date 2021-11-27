@@ -10,7 +10,7 @@ import DAO.*;
 @WebServlet(name = "MainServlet", value = "/MainServlet")
 public class MainServlet extends HttpServlet {
     DAO dao = null;
-    HttpSession session = null;
+    SessionServlet sessionObj;
 
     public void init(ServletConfig conf) throws ServletException{
         super.init(conf);
@@ -20,6 +20,7 @@ public class MainServlet extends HttpServlet {
         String user = ctx.getInitParameter("user");
         String pwd = ctx.getInitParameter("pwd");
         dao = new DAO(url, user, pwd);
+        sessionObj = new SessionServlet();
     }
 
     @Override
@@ -49,65 +50,10 @@ public class MainServlet extends HttpServlet {
                     }
                     break;
 
-                case "login":
-                    email = request.getParameter("email");
-                    password = request.getParameter("password");
-                    int result = dao.searchUser(email, password);
-                    if (result >= 0 && result <= 2) {
-                        System.out.println("user found");
-                        out.println(1); //write the JSONArray to the response
-                        processRequest(request, response, email, result);
-                    } else {
-                        System.out.println("User not found");
-                        out.println(0); //write the JSONArray to the response
-                    }
-                    out.close();
-                    break;
-
-                case "logout":
-                    processLogout(request, response);
-                    break;
-
-                case "indexSession":
-                    if(this.session != null){
-                        out.print("Welcome " + this.session.getAttribute("email"));
-                    } else {
-                        out.print("Welcome guest");
-                    }
-                    System.out.println("sessioneprova");
-                    break;
-
-                case "getRoleSession":
-                    if (session == null)
-                        out.print(0);
-                    else
-                        out.print(this.session.getAttribute("role"));
-                    break;
-
                 default:
                     System.out.println("Error.");
                     break;
             }
         }
     }
-
-    private void processRequest(HttpServletRequest request, HttpServletResponse response, String email, int role) throws ServletException, IOException {
-        System.out.println(role);
-        this.session = request.getSession();
-        System.out.println(email);
-        if (email != null){
-            System.out.println("p4");
-            this.session.setAttribute("email", email);
-            this.session.setAttribute("role", role);
-        }
-        System.out.println("p3");
-    }
-
-    private void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        this.session.invalidate();
-        this.session = null;
-    }
-
 }
