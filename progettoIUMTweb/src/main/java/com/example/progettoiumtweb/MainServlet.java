@@ -1,11 +1,13 @@
 package com.example.progettoiumtweb;
 
+import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import DAO.*;
+import com.google.gson.Gson;
 
 @WebServlet(name = "MainServlet", value = "/MainServlet")
 public class MainServlet extends HttpServlet {
@@ -25,7 +27,32 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("debug attuale1");
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        String act = request.getParameter("submit");
+        Gson gson = new Gson(); // traduttore da e verso formato JSON
+        ArrayList<String> result;
+        String s;
+        switch(act) {
+            case "subjectAvailable":
+                System.out.println("debug attuale2");
+                result = dao.getSubjectAvailable();
+                System.out.println("debug attuale3");
+                s = gson.toJson(result);
+                System.out.println("debug attuale4");
+                System.out.println("STRINGA JSON " + s);
+                System.out.println("debug attuale5");
+                out.print(s);
+                break;
 
+            case "getTeachers":
+                result = dao.getTeachers(request.getParameter("subject"));
+                s = gson.toJson(result);
+                System.out.println("STRINGA JSON " + s);
+                out.print(s);
+                break;
+        }
     }
 
     @Override
