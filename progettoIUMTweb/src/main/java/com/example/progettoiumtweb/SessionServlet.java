@@ -25,7 +25,27 @@ public class SessionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try (PrintWriter out = response.getWriter()) {
+            String act = request.getParameter("submit");
+            String subject, teacher, day, hour, emailUser;
+            switch (act) {
+                case "insertBooking":
+                    subject = request.getParameter("subject");
+                    teacher = request.getParameter("teacher");
+                    System.out.println("SESSIONSERVLET: "+ teacher);
+                    day = request.getParameter("day");
+                    hour = request.getParameter("hour");
+                    emailUser = (String)session.getAttribute("email");
+                    if (dao.insertBooking(subject, teacher, day, hour, emailUser))
+                        out.print("true");
+                    else
+                        out.print("false");
+                    break;
+                default:
+                    System.out.println("Errore");
+                    break;
+            }
+        }
     }
 
     @Override

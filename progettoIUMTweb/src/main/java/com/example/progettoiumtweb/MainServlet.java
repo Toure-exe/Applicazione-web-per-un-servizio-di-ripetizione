@@ -33,6 +33,7 @@ public class MainServlet extends HttpServlet {
         String act = request.getParameter("submit");
         Gson gson = new Gson(); // traduttore da e verso formato JSON
         ArrayList<String> result;
+        ArrayList<Tutoring> tutorings;
         String s;
         switch(act) {
             case "subjectAvailable":
@@ -49,6 +50,14 @@ public class MainServlet extends HttpServlet {
             case "getTeachers":
                 result = dao.getTeachers(request.getParameter("subject"));
                 s = gson.toJson(result);
+                System.out.println("STRINGA JSON " + s);
+                out.print(s);
+                break;
+
+            case "teacherAvailability":
+                System.out.println("Ci entri?");
+                tutorings = dao.getTutoringsList(request.getParameter("subject"), request.getParameter("teacher"));
+                s = gson.toJson(tutorings);
                 System.out.println("STRINGA JSON " + s);
                 out.print(s);
                 break;

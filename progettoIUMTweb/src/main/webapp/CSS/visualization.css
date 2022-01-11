@@ -1,0 +1,5 @@
+td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+
+#table td:hover {
+    background-color: #ccc!important;
+}

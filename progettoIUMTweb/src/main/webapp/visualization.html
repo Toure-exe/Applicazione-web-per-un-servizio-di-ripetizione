@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/visualization.css">
     <script src="JavaScript/visualization.js"></script>
 </head>
 <body>
@@ -22,7 +23,7 @@
         <option selected>Seleziona la materia</option>
         <option v-for="subject in subjects"> {{subject}} </option>
     </select>
-    <button v-if="student || admin" class="btn btn-primary" type="button"> Prenota </button>
+    <button v-if="(student || admin) && available" id="actionBook" class="btn btn-primary" type="button"> Prenota </button>
 </div>
 
 
@@ -31,12 +32,46 @@
         <option selected>Seleziona il docente</option>
         <option v-for="teacher in teachers"> {{teacher}} </option>
     </select>
+
+    <table id="table">
+        <tr>
+            <td>Lunedi</td>
+            <td>15-16</td>
+            <td>16-17</td>
+            <td>17-18</td>
+            <td>18-19</td>
+        </tr>
+        <tr>
+            <td>Martedi</td>
+            <td>15-16</td>
+            <td>16-17</td>
+            <td>17-18</td>
+            <td>18-19</td>
+        </tr>
+        <tr>
+            <td>Mercoledi</td>
+            <td>15-16</td>
+            <td>16-17</td>
+            <td>17-18</td>
+            <td>18-19</td>
+        </tr>
+        <tr>
+            <td>Giovedi</td>
+            <td>15-16</td>
+            <td>16-17</td>
+            <td>17-18</td>
+            <td>18-19</td>
+        </tr>
+        <tr>
+            <td>Venerdi</td>
+            <td>15-16</td>
+            <td>16-17</td>
+            <td>17-18</td>
+            <td>18-19</td>
+        </tr>
+    </table>
+    <p>{{bookingMessage}}</p>
 </div>
-
-
-
-
-
 
 </body>
 </html>
