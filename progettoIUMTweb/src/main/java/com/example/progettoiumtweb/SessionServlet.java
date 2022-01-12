@@ -36,10 +36,10 @@ public class SessionServlet extends HttpServlet {
             ArrayList<String> result;
             ArrayList<StudentTutoring> st;
             String s;
-            response.setContentType("application/json");
             Gson gson = new Gson(); // traduttore da e verso formato JSON
             switch (act) {
                 case "insertBooking":
+                    response.setContentType("text/html;charset=UTF-8");
                     subject = request.getParameter("subject");
                     teacher = request.getParameter("teacher");
                     System.out.println("SESSIONSERVLET: "+ teacher);
@@ -52,6 +52,7 @@ public class SessionServlet extends HttpServlet {
                     break;
 
                 case "getStudentSubject":
+                    response.setContentType("application/json");
                     result = dao.getStudentSubject(emailUser);
                     s = gson.toJson(result);
                     System.out.println("STRINGA JSON " + s);
@@ -59,6 +60,7 @@ public class SessionServlet extends HttpServlet {
                     break;
 
                 case "getStudentTutoring":
+                    response.setContentType("application/json");
                     st = dao.getStudentTutoring(emailUser);
                     s = gson.toJson(st);
                     System.out.println("STRINGA JSON " + s);
@@ -66,7 +68,16 @@ public class SessionServlet extends HttpServlet {
                     break;
 
                 case "confirmTutoring":
+                    response.setContentType("text/html;charset=UTF-8");
                     if (dao.confirmTutoring(emailUser, request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject")))
+                        out.print("true");
+                    else
+                        out.print("false");
+                    break;
+
+                case "deleteTutoring":
+                    response.setContentType("text/html;charset=UTF-8");
+                    if (dao.deleteTutoring(emailUser, request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject")))
                         out.print("true");
                     else
                         out.print("false");

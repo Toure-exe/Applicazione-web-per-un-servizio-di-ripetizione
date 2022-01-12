@@ -61,7 +61,6 @@ $(document).ready(function () {
                 });
             },
             confirmTutoring:function (index) {
-                var self = this;
                 var date = this.tutorings[index].date;
                 var hour = this.tutorings[index].hour;
                 var teacher = this.tutorings[index].teacher;
@@ -81,7 +80,23 @@ $(document).ready(function () {
                 });
             },
             cancelTutoring:function (index) {
-
+                var date = this.tutorings[index].date;
+                var hour = this.tutorings[index].hour;
+                var teacher = this.tutorings[index].teacher;
+                var subject = this.tutorings[index].subject;
+                $.ajax({
+                    url : "SessionServlet", // Url of backend (can be python, php, etc..)
+                    type: "GET", // data type (can be get, post, put, delete)
+                    data : {submit: "deleteTutoring", date: date, hour: hour, teacher: teacher, subject: subject}, // data in json format
+                    async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+                    success: function(data) {
+                        if (data === "true") {
+                            alert ("La tua prenotazione è stata cancellata con successo");
+                            location.reload();
+                        }
+                        else alert ("Errore");
+                    }
+                });
             }
         }
     });

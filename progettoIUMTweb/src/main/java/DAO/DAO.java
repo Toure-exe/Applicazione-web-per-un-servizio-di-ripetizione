@@ -217,8 +217,13 @@ public class DAO {
             else
                 emailTeacher = rs.getString("emailDocente");
 
-            //insert the dates from the database
+            //insert the dates from the database, in Ripetizioni Table
             query = "INSERT INTO Ripetizione (Giorno, Ora, emailDocente, emailStudente, IDCorso) VALUES ('" + day + "', '" + hour + "', '" + emailTeacher + "', '" + emailUser + "', '" + iDCourse + "');";
+            System.out.println(query);
+            st.executeUpdate(query);
+
+            //insert the dates from the database, in Storico Table
+            query = "INSERT INTO Storico (Data, Ora, emailDocente, emailStudente, IDCorso, Stato) VALUES ('" + day + "', '" + hour + "', '" + emailTeacher + "', '" + emailUser + "', '" + iDCourse + "', 0);";
             System.out.println(query);
             st.executeUpdate(query);
 
@@ -233,6 +238,7 @@ public class DAO {
                 }
             }
         }
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
         return true;
     }
 
@@ -305,7 +311,82 @@ public class DAO {
     }
 
     public boolean confirmTutoring (String emailUtente, String day, String hour, String teacher, String subject) {
+        String query, idCorso;
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url, user, pwd);
+            if (conn1 != null)
+                System.out.println("Connected to the database PiattaformaRipetizioni");
+            Statement st = conn1.createStatement();
+            query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "';";
+            System.out.println(query);
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.next()) //resultSet vuoto
+                return false;
+            else idCorso = rs.getString("IDCorso");
 
+            System.out.println(idCorso);
+            System.out.println((teacher.split(" "))[0]);
+            System.out.println((teacher.split(" "))[1]);
+            query = "DELETE FROM Ripetizione WHERE Giorno='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
+            System.out.println(query);
+            st.executeUpdate(query);
+
+            query = "UPDATE Storico SET Stato= 1 WHERE Data='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
+            System.out.println(query);
+            st.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println("qui ci cadi"+e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e1) {
+                    System.out.println(e1.getMessage());
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean deleteTutoring (String emailUtente, String day, String hour, String teacher, String subject) {
+        String query, idCorso;
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url, user, pwd);
+            if (conn1 != null)
+                System.out.println("Connected to the database PiattaformaRipetizioni");
+            Statement st = conn1.createStatement();
+            query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "';";
+            System.out.println(query);
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.next()) //resultSet vuoto
+                return false;
+            else idCorso = rs.getString("IDCorso");
+
+            System.out.println(idCorso);
+            System.out.println((teacher.split(" "))[0]);
+            System.out.println((teacher.split(" "))[1]);
+            query = "DELETE FROM Ripetizione WHERE Giorno='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
+            System.out.println(query);
+            st.executeUpdate(query);
+
+            query = "UPDATE Storico SET Stato= 2 WHERE Data='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
+            System.out.println(query);
+            st.executeUpdate(query);
+
+        } catch (SQLException e) {
+            System.out.println("qui ci cadi"+e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e1) {
+                    System.out.println(e1.getMessage());
+                }
+            }
+        }
         return true;
     }
 

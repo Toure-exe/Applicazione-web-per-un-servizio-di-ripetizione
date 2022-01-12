@@ -175,6 +175,7 @@ $(document).ready(function () {
                     data : {submit: "insertBooking", subject: subject, teacher: teacher, day: day, hour: hour}, // data in json format
                     async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
                     success: function(data) {
+                        console.log("questo è il data: "+data);
                         if (data === "true") {
                             alert("La tua prenotazione è stata effettuata con successo");
                             window.location = "index.html";
