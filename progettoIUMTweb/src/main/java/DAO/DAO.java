@@ -187,7 +187,6 @@ public class DAO {
     }
 
     public boolean insertBooking(String subject, String teacher, String day, String hour, String emailUser) {
-        boolean res = false;
         String query, iDCourse, emailTeacher;
         ResultSet rs;
         Connection conn1 = null;
@@ -234,6 +233,79 @@ public class DAO {
                 }
             }
         }
+        return true;
+    }
+
+    public ArrayList<String> getStudentSubject (String email) {
+        ArrayList<String> res = new ArrayList<>();
+        String query;
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url, user, pwd);
+            if (conn1 != null)
+                System.out.println("Connected to the database PiattaformaRipetizioni");
+            Statement st = conn1.createStatement();
+            query = "SELECT c.NomeCorso FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) WHERE r.emailStudente = '" + email + "';";
+            System.out.println(query);
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.isBeforeFirst()) //resultSet vuoto
+                return res;
+            else {
+                while(rs.next()) {
+                    System.out.println(rs.getString("NomeCorso"));
+                    res.add(rs.getString("NomeCorso"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("qui ci cadi"+e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e1) {
+                    System.out.println(e1.getMessage());
+                }
+            }
+        }
+        return res;
+    }
+
+    public ArrayList<StudentTutoring> getStudentTutoring (String email) {
+        ArrayList<StudentTutoring> res = new ArrayList<>();
+        String query;
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url, user, pwd);
+            if (conn1 != null)
+                System.out.println("Connected to the database PiattaformaRipetizioni");
+            Statement st = conn1.createStatement();
+            query = "SELECT c.NomeCorso, d.Nome, d.Cognome, r.Giorno, r.Ora FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) JOIN Docente as d on (r.emailDocente=d.emailDocente) WHERE r.emailStudente = '" + email + "';";
+            System.out.println(query);
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.isBeforeFirst()) //resultSet vuoto
+                return res;
+            else {
+                while(rs.next()) {
+                    System.out.println(rs.getString("Nome"));
+                    res.add(new StudentTutoring(rs.getString("Giorno"), rs.getString("Ora"), rs.getString("NomeCorso"), rs.getString("Nome") + " " + rs.getString("Cognome")));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("qui ci cadi"+e.getMessage());
+        } finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e1) {
+                    System.out.println(e1.getMessage());
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean confirmTutoring (String emailUtente, String day, String hour, String teacher, String subject) {
+
         return true;
     }
 

@@ -5,7 +5,10 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import DAO.*;
+import com.google.gson.Gson;
 
 @WebServlet(name = "SessionServlet", value = "/SessionServlet")
 public class SessionServlet extends HttpServlet {
@@ -28,6 +31,13 @@ public class SessionServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String act = request.getParameter("submit");
             String subject, teacher, day, hour, emailUser;
+            emailUser = (String)session.getAttribute("email");
+            System.out.println("EMAIL UTENTE: "+emailUser);
+            ArrayList<String> result;
+            ArrayList<StudentTutoring> st;
+            String s;
+            response.setContentType("application/json");
+            Gson gson = new Gson(); // traduttore da e verso formato JSON
             switch (act) {
                 case "insertBooking":
                     subject = request.getParameter("subject");
@@ -35,12 +45,33 @@ public class SessionServlet extends HttpServlet {
                     System.out.println("SESSIONSERVLET: "+ teacher);
                     day = request.getParameter("day");
                     hour = request.getParameter("hour");
-                    emailUser = (String)session.getAttribute("email");
                     if (dao.insertBooking(subject, teacher, day, hour, emailUser))
                         out.print("true");
                     else
                         out.print("false");
                     break;
+
+                case "getStudentSubject":
+                    result = dao.getStudentSubject(emailUser);
+                    s = gson.toJson(result);
+                    System.out.println("STRINGA JSON " + s);
+                    out.print(s);
+                    break;
+
+                case "getStudentTutoring":
+                    st = dao.getStudentTutoring(emailUser);
+                    s = gson.toJson(st);
+                    System.out.println("STRINGA JSON " + s);
+                    out.print(s);
+                    break;
+
+                case "confirmTutoring":
+                    if (dao.confirmTutoring(emailUser, request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject")))
+                        out.print("true");
+                    else
+                        out.print("false");
+                    break;
+
                 default:
                     System.out.println("Errore");
                     break;
