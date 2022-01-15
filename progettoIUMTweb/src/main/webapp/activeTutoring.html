@@ -17,13 +17,24 @@
 <body>
 
 <h3>Tutoring</h3>
-<ul id="activeTutoring" class="list-group">
-    <li v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
-        <button v-if="student" id="confirmButton" class="btn btn-primary" type="button" style="float: right"> Conferma avvenuta ripetizione </button>
-        <button v-if="student || admin" id="cancelButton" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
-    </li>
+    <!--<ul id="std" v-if="student" class="list-group">
+        <li v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
+            <button id="confirmButton" class="btn btn-primary" type="button" style="float: right"> Conferma avvenuta ripetizione </button>
+            <button id="cancelButton" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
+        </li>
+    </ul>-->
 
-</ul>
+    <ul id="activeTutoring" class="list-group">
+        <li v-if="student" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
+            <button id="confirmButton" class="btn btn-primary" type="button" style="float: right"> Conferma avvenuta ripetizione </button>
+            <button id="cancelButton" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
+        </li>
+        <li v-if="admin" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}, {{tutoring.student}}
+            <button id="cancelButtonAdmin" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
+        </li>
+    </ul>
+
+
 
 </body>
 </html>

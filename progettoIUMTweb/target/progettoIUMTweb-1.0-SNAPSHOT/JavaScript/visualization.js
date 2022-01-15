@@ -89,12 +89,12 @@ $(document).ready(function () {
         methods:{
             getTeachers:function() {
                 this.subjectSelected = $('#subjectSelected').find(":selected").text();
-                console.log(this.subjectSelected);
+                console.log(this.subjectSelected.replace(/\s/g, ''));
                 var self = this;
                 $.ajax({
                     url : "MainServlet", // Url of backend (can be python, php, etc..)
                     type: "GET", // data type (can be get, post, put, delete)
-                    data : {submit: "getTeachers", subject: this.subjectSelected}, // data in json format
+                    data : {submit: "getTeachers", subject: this.subjectSelected.replace(/\s/g, ''), email: "false"}, // data in json format
                     async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
                     success: function(data) {
                         self.teachers = data;

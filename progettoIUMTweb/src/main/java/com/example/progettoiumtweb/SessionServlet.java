@@ -61,7 +61,7 @@ public class SessionServlet extends HttpServlet {
 
                 case "getStudentTutoring":
                     response.setContentType("application/json");
-                    st = dao.getStudentTutoring(emailUser);
+                    st = dao.getStudentTutoring(emailUser, (int)session.getAttribute("role"));
                     s = gson.toJson(st);
                     System.out.println("STRINGA JSON " + s);
                     out.print(s);
@@ -75,12 +75,21 @@ public class SessionServlet extends HttpServlet {
                         out.print("false");
                     break;
 
-                case "deleteTutoring":
-                    response.setContentType("text/html;charset=UTF-8");
-                    if (dao.deleteTutoring(emailUser, request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject")))
-                        out.print("true");
-                    else
-                        out.print("false");
+                case "getHistory":
+                    response.setContentType("application/json");
+                    st = dao.getHistory((int)session.getAttribute("role"), emailUser);
+                    s = gson.toJson(st);
+                    System.out.println("STRINGA JSON " + s);
+                    out.print(s);
+                    break;
+
+                case "getRestrictedHistory":
+                    response.setContentType("application/json");
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    st = dao.getRestrictedHistory(status);
+                    s = gson.toJson(st);
+                    System.out.println("STRINGA JSON " + s);
+                    out.print(s);
                     break;
 
                 default:
@@ -132,6 +141,22 @@ public class SessionServlet extends HttpServlet {
                         out.print(0);
                     else
                         out.print(session.getAttribute("role"));
+                    break;
+
+                case "deleteTutoring":
+                    response.setContentType("text/html;charset=UTF-8");
+                    if ((int)session.getAttribute("role") == 2) {
+                        if (dao.deleteTutoring(request.getParameter("emailStudent"), request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject"), (int)session.getAttribute("role")))
+                            out.print("true");
+                        else
+                            out.print("false");
+                    } else {
+                        if (dao.deleteTutoring((String)session.getAttribute("email"), request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject"), (int)session.getAttribute("role")))
+                            out.print("true");
+                        else
+                            out.print("false");
+                    }
+
                     break;
 
                 default:

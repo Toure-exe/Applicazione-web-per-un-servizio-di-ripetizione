@@ -56,7 +56,7 @@ $(document).ready(function () {
                     async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
                     success: function(data) {
                         self.tutorings = data;
-                        console.log("query2");
+                        console.log(self.tutorings);
                     }
                 });
             },
@@ -84,19 +84,38 @@ $(document).ready(function () {
                 var hour = this.tutorings[index].hour;
                 var teacher = this.tutorings[index].teacher;
                 var subject = this.tutorings[index].subject;
-                $.ajax({
-                    url : "SessionServlet", // Url of backend (can be python, php, etc..)
-                    type: "GET", // data type (can be get, post, put, delete)
-                    data : {submit: "deleteTutoring", date: date, hour: hour, teacher: teacher, subject: subject}, // data in json format
-                    async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
-                    success: function(data) {
-                        if (data === "true") {
-                            alert ("La tua prenotazione è stata cancellata con successo");
-                            location.reload();
+                if (this.admin) {
+                    var emailStudent = this.tutorings[index].student;
+                    $.ajax({
+                        url : "SessionServlet", // Url of backend (can be python, php, etc..)
+                        type: "POST", // data type (can be get, post, put, delete)
+                        data : {submit: "deleteTutoring", date: date, hour: hour, teacher: teacher, subject: subject, emailStudent: emailStudent}, // data in json format
+                        async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+                        success: function(data) {
+                            if (data === "true") {
+                                alert ("La tua prenotazione è stata cancellata con successo");
+                                location.reload();
+                            }
+                            else alert ("Errore");
                         }
-                        else alert ("Errore");
-                    }
-                });
+                    });
+                } else {
+                    $.ajax({
+                        url : "SessionServlet", // Url of backend (can be python, php, etc..)
+                        type: "POST", // data type (can be get, post, put, delete)
+                        data : {submit: "deleteTutoring", date: date, hour: hour, teacher: teacher, subject: subject}, // data in json format
+                        async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
+                        success: function(data) {
+                            if (data === "true") {
+                                alert ("La tua prenotazione è stata cancellata con successo");
+                                location.reload();
+                            }
+                            else alert ("Errore");
+                        }
+                    });
+                }
+
+
             }
         }
     });
@@ -109,5 +128,12 @@ $(document).ready(function () {
     $(".list-group").on('click', '#cancelButton', function () {
         var index = $(this).parent().index();
         app.cancelTutoring(index);
+    });
+
+    $(".list-group").on('click', '#cancelButtonAdmin', function () {
+        console.log("FASE 1");
+        var index = $(this).parent().index();
+        app.cancelTutoring(index);
+        console.log("FASE 2");
     });
 });

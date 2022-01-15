@@ -22,7 +22,7 @@
                 <div  class="col-lg-5">
                     <img src="img/index.png" class="img-fluid" alt="">
                     <p class="font-weight-bold py-3">{{ session }}</p>
-                    <span @click="logout" v-if="student"><button type="button" class="btn btn-primary">Logout</button></span>
+                    <span @click="logout" v-if="student || admin"><button type="button" class="btn btn-primary">Logout</button></span>
                 </div>
                 <div class="col-lg-7 px-5 pt-5">
                     <h1 class="font-weight-bold py-3">Online Private Lessons</h1>
@@ -53,25 +53,13 @@
                         <h4></h4>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <span v-if="student"><button type="button" class="btn btn-primary">Confirmation occurred tutoring</button></span>
+                                <a href="history.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span></a>
                             </div>
                         </div>
                         <h4></h4>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <span v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <span v-if="admin"><button type="button" class="btn btn-primary">All History booking</button></span>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <span v-if="admin"><button type="button" class="btn btn-primary">Teacher actions</button></span>
+                                <a href="adminPage.html"><span v-if="admin"><button type="button" class="btn btn-primary">Admin actions</button></span></a>
                             </div>
                         </div>
                     </form>

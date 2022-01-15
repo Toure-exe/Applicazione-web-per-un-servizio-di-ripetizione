@@ -28,6 +28,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("debug attuale1");
+        String email = "";
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         String act = request.getParameter("submit");
@@ -35,7 +36,7 @@ public class MainServlet extends HttpServlet {
         ArrayList<String> result;
         ArrayList<Tutoring> tutorings;
         String s;
-        switch(act) {
+        switch (act) {
             case "subjectAvailable":
                 System.out.println("debug attuale2");
                 result = dao.getSubjectAvailable();
@@ -48,7 +49,8 @@ public class MainServlet extends HttpServlet {
                 break;
 
             case "getTeachers":
-                result = dao.getTeachers(request.getParameter("subject"));
+                email = request.getParameter("email");
+                result = dao.getTeachers(request.getParameter("subject"), email);
                 s = gson.toJson(result);
                 System.out.println("STRINGA JSON " + s);
                 out.print(s);
@@ -61,6 +63,41 @@ public class MainServlet extends HttpServlet {
                 System.out.println("STRINGA JSON " + s);
                 out.print(s);
                 break;
+
+            case "insertCourse":
+                response.setContentType("text/html;charset=UTF-8");
+                if (dao.insertCourse(request.getParameter("subject")))
+                    out.print("true");
+                else
+                    out.print("false");
+                break;
+
+            case "getAllTeachers":
+                if (request.getParameter("email").equals("true"))
+                    result = dao.getAllTeachers(true);
+                else
+                    result = dao.getAllTeachers(false);
+                s = gson.toJson(result);
+                System.out.println("STRINGA JSON " + s);
+                out.print(s);
+                break;
+
+            case "insertAssociation":
+                response.setContentType("text/html;charset=UTF-8");
+                if (dao.insertAssociation(request.getParameter("teacher"), request.getParameter("subject")))
+                    out.print("true");
+                else
+                    out.print("false");
+                break;
+
+            case "deleteCourse":
+                response.setContentType("text/html;charset=UTF-8");
+                dao.deleteCourse(request.getParameter("subject"));
+                break;
+
+            default:
+                System.out.println("Error.");
+                break;
         }
     }
 
@@ -71,19 +108,40 @@ public class MainServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             System.out.println("ENTRA1");
             String act = request.getParameter("submit");
-            String email, password, rPassword;
+            String email, password, rPassword, name, surname;
             System.out.println(act);
             switch(act) {
                 case "registration":
                     email = request.getParameter("email");
                     password = request.getParameter("password");
                     rPassword = request.getParameter("rPassword");
-                    if(password.equals(rPassword)){
+                    if (password.equals(rPassword)){
                         dao.insertStudent(email, password, 1);
                         System.out.println("Student correctly insert in the system");
                     } else {
                         out.println("The password are not equal");
                     }
+                    break;
+
+                case "insertTeacher":
+                    name = request.getParameter("nome");
+                    surname = request.getParameter("cognome");
+                    email = request.getParameter("email");
+                    if (dao.insertTeacher(name, surname, email))
+                        out.print("true");
+                    else
+                        out.print("false");
+                    break;
+
+                case "deleteTeacher":
+                    name = request.getParameter("nome");
+                    surname = request.getParameter("cognome");
+                    email = request.getParameter("email");
+                    dao.deleteTeacher(name, surname, email);
+                    break;
+
+                case "deleteAssociation":
+                    dao.deleteAssociation(request.getParameter("email"), request.getParameter("subject"));
                     break;
 
                 default:

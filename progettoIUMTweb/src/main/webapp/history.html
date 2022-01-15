@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>History</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="CSS/index.css">
+  <script src="JavaScript/history.js"></script>
+</head>
+<body>
+
+<div id="restriction">
+
+    <div v-if="admin">
+        <h3>History booking</h3>
+        <select id="restrictionSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option>All bookings</option>
+            <option>Active bookings</option>
+            <option>Confirmed bookings</option>
+            <option >Cancelled bookings</option>
+        </select>
+
+        <table id="tableAdmin">
+            <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Student</th>
+                <th>Date</th>
+                <th>Hour</th>
+                <th>State</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="history in histories">
+                <td>{{ history.subject }}</td>
+                <td>{{ history.teacher }}</td>
+                <td>{{ history.student }}</td>
+                <td>{{ history.date }}</td>
+                <td>{{ history.hour }}</td>
+                <td v-if="history.status === 0"> In corso</td>
+                <td v-if="history.status === 1"> Avvenuta</td>
+                <td v-if="history.status === 2"> Cancellata</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div v-if="student">
+        <table id="tableStudent">
+            <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Date</th>
+                <th>Hour</th>
+                <th>State</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="history in histories">
+                <td>{{ history.subject }}</td>
+                <td>{{ history.teacher }}</td>
+                <td>{{ history.date }}</td>
+                <td>{{ history.hour }}</td>
+                <td v-if="history.status === 0"> In corso</td>
+                <td v-if="history.status === 1"> Avvenuta</td>
+                <td v-if="history.status === 2"> Cancellata</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
