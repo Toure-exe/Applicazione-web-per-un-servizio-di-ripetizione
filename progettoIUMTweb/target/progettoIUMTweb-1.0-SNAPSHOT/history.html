@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,12 +11,15 @@
   <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="CSS/index.css">
+  <link rel="stylesheet" href="CSS/history.css">
   <script src="JavaScript/history.js"></script>
+
 </head>
 <body>
 
-<div id="restriction">
+<div id="restriction" class="wrapper">
+
+    <h2>History booking</h2>
 
     <div v-if="admin">
         <h3>History booking</h3>
@@ -26,7 +30,7 @@
             <option >Cancelled bookings</option>
         </select>
 
-        <table id="tableAdmin">
+        <table id="tableAdmin" class="table table-striped">
             <thead>
             <tr>
                 <th>Subject</th>
@@ -53,7 +57,7 @@
     </div>
 
     <div v-if="student">
-        <table id="tableStudent">
+        <table id="tableStudent" class="table table-striped">
             <thead>
             <tr>
                 <th>Subject</th>

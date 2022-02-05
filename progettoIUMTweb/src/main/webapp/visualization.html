@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualization Reps</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,68 +11,144 @@
     <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="CSS/index.css">
     <link rel="stylesheet" href="CSS/visualization.css">
     <script src="JavaScript/visualization.js"></script>
+
 </head>
 <body>
 
-<p>Compila i campi per effettuare/visualizzare le disponibilità di una ripetizione</p>
+<div class="wrapper">
 
-<div id="subjectsVisualization">
-    <select id="subjectSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected>Seleziona la materia</option>
-        <option v-for="subject in subjects"> {{subject}} </option>
-    </select>
-    <button v-if="(student || admin) && available" id="actionBook" class="btn btn-primary" type="button"> Prenota </button>
+    <h2>View/Booking Tutoring</h2>
+
+    <div id="subjectsVisualization">
+        <select id="subjectSelected" aria-label=".form-select-lg example">
+            <option selected>Select a subject</option>
+            <option v-for="subject in subjects"> {{subject}} </option>
+        </select>
+        <button  id="actionBook" class="btn btn-primary" type="button"> Book </button>
+        <!-- v-if="(student || admin) && available" -->
+    </div>
+
+    <div id="teachersVisualization">
+        <select id="teacherSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Select a teacher</option>
+            <option v-for="teacher in teachers"> {{teacher}} </option>
+        </select>
+
+        <table id="table"  class="table table-striped">
+            <tr>
+                <td>Monday</td>
+                <td>15-16</td>
+                <td>16-17</td>
+                <td>17-18</td>
+                <td>18-19</td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td>15-16</td>
+                <td>16-17</td>
+                <td>17-18</td>
+                <td>18-19</td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>15-16</td>
+                <td>16-17</td>
+                <td>17-18</td>
+                <td>18-19</td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+                <td>15-16</td>
+                <td>16-17</td>
+                <td>17-18</td>
+                <td>18-19</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td>15-16</td>
+                <td>16-17</td>
+                <td>17-18</td>
+                <td>18-19</td>
+            </tr>
+        </table>
+        <p>Questo è il messaggio{{bookingMessage}}</p>
+
+    </div>
+
 </div>
 
+<!--
+<section style="position:relative" class="Form my-4 mx-5" style="overflow-x:auto;">
+    <div class="container">
+        <div class="row no-gutters">
+            <p style="position:absolute;">Compila i campi per effettuare/visualizzare le disponibilità di una ripetizione</p>
+            <div class="col-lg">
+                <div class="form-row">
+                    <div id="subjectsVisualization">
+                        <select style="position:absolute; left:3%; top:15%" id="subjectSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            <option selected>Seleziona la materia</option>
+                            <option v-for="subject in subjects"> {{subject}} </option>
+                        </select>
+                        <button  style="position:absolute; left:36%; top:12%" id="actionBook" class="btn btn-primary" type="button"> Prenota </button>
+                        //v-if="(student || admin) && available"
+                    </div>
+                </div>
 
-<div id="teachersVisualization">
-    <select id="teacherSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected>Seleziona il docente</option>
-        <option v-for="teacher in teachers"> {{teacher}} </option>
-    </select>
+                <div class="form-row" style="overflow-x:auto;">
+                    <div id="teachersVisualization">
+                        <select style="position:absolute; left:20%; top:15%" id="teacherSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            <option selected>Seleziona il docente</option>
+                            <option v-for="teacher in teachers"> {{teacher}} </option>
+                        </select>
 
-    <table id="table">
-        <tr>
-            <td>Lunedi</td>
-            <td>15-16</td>
-            <td>16-17</td>
-            <td>17-18</td>
-            <td>18-19</td>
-        </tr>
-        <tr>
-            <td>Martedi</td>
-            <td>15-16</td>
-            <td>16-17</td>
-            <td>17-18</td>
-            <td>18-19</td>
-        </tr>
-        <tr>
-            <td>Mercoledi</td>
-            <td>15-16</td>
-            <td>16-17</td>
-            <td>17-18</td>
-            <td>18-19</td>
-        </tr>
-        <tr>
-            <td>Giovedi</td>
-            <td>15-16</td>
-            <td>16-17</td>
-            <td>17-18</td>
-            <td>18-19</td>
-        </tr>
-        <tr>
-            <td>Venerdi</td>
-            <td>15-16</td>
-            <td>16-17</td>
-            <td>17-18</td>
-            <td>18-19</td>
-        </tr>
-    </table>
-    <p>{{bookingMessage}}</p>
-</div>
+                        <table id="table"  class="table table-striped" style="margin-top:25%; margin-left:10%;">
+                            <tr>
+                                <td>Lunedi</td>
+                                <td>15-16</td>
+                                <td>16-17</td>
+                                <td>17-18</td>
+                                <td>18-19</td>
+                            </tr>
+                            <tr>
+                                <td>Martedi</td>
+                                <td>15-16</td>
+                                <td>16-17</td>
+                                <td>17-18</td>
+                                <td>18-19</td>
+                            </tr>
+                            <tr>
+                                <td>Mercoledi</td>
+                                <td>15-16</td>
+                                <td>16-17</td>
+                                <td>17-18</td>
+                                <td>18-19</td>
+                            </tr>
+                            <tr>
+                                <td>Giovedi</td>
+                                <td>15-16</td>
+                                <td>16-17</td>
+                                <td>17-18</td>
+                                <td>18-19</td>
+                            </tr>
+                            <tr>
+                                <td>Venerdi</td>
+                                <td>15-16</td>
+                                <td>16-17</td>
+                                <td>17-18</td>
+                                <td>18-19</td>
+                            </tr>
+                        </table>
+                        <p style="position: absolute; top:85%; left:36%; font-size:110%; display:inline-block">{{bookingMessage}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+-->
 
 </body>
 </html>

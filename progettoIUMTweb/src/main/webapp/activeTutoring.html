@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Active tutoring</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,13 +11,14 @@
     <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/activeTutoring.css">
     <script src="JavaScript/activeTutoring.js"></script>
 
 </head>
 <body>
 
-<h3>Tutoring</h3>
+<div id="activeTutoring" class="wrapper">
+    <h2>Tutoring</h2>
     <!--<ul id="std" v-if="student" class="list-group">
         <li v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
             <button id="confirmButton" class="btn btn-primary" type="button" style="float: right"> Conferma avvenuta ripetizione </button>
@@ -24,17 +26,25 @@
         </li>
     </ul>-->
 
-    <ul id="activeTutoring" class="list-group">
+    <ul class="list-group">
+
+        <!-- test
+        <li class="list-group-item">Teacher: steven hawking hour: 16-17
+            <button id="confirmButton" class="btn btn-primary" type="button"> Confirm </button>
+            <button id="cancelButton" class="btn btn-primary" type="button"> Cancel </button>
+        </li>
+        -->
+
         <li v-if="student" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
-            <button id="confirmButton" class="btn btn-primary" type="button" style="float: right"> Conferma avvenuta ripetizione </button>
-            <button id="cancelButton" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
+            <button id="confirmButton" class="btn btn-primary" type="button"> Confirm </button>
+            <button id="cancelButton" class="btn btn-primary" type="button"> Cancel </button>
         </li>
         <li v-if="admin" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}, {{tutoring.student}}
             <button id="cancelButtonAdmin" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
         </li>
+
     </ul>
-
-
+</div>
 
 </body>
 </html>

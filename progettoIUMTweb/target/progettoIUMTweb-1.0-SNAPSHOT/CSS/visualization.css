@@ -1,5 +1,83 @@
-td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+/* CSS general setting and in particular of the smartphone screen */
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background: white;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+.wrapper h2 {
+    padding: 30px 30px 0px;
+    font-family: Arial;
+    font-size: 50px;
+    color: #111;
+    line-height: 44px;
+}
+
+td {
+    border: 1px #DDD solid;
+    padding: 5px;
+    cursor: pointer;
+}
 
 #table td:hover {
     background-color: #ccc!important;
+}
+
+.wrapper #subjectsVisualization {
+    padding: 5px 30px 0px;
+}
+
+.wrapper #teachersVisualization {
+    padding: 5px 30px 0px;
+}
+
+.wrapper #table {
+    padding: 0px 5px 0px;
+}
+
+.wrapper p {
+    font-family: Arial;
+    font-size: 25px;
+    color: #111;
+    line-height: 25px;
+}
+
+/* CSS settings of the iPad screen*/
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        width: 600px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
+
+    .wrapper #subjectsVisualization {
+        padding: 5px 0px 0px;
+    }
+
+    .wrapper #teachersVisualization {
+        padding: 5px 0px 0px;
+    }
+}
+
+/* CSS settings of the PC screen */
+@media only screen and (min-width: 1000px) {
+    .wrapper {
+        width: 1000px;
+        margin-left: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
 }

@@ -1,0 +1,94 @@
+/* CSS general setting and in particular of the smartphone screen */
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background: white;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+.wrapper h2 {
+    padding: 30px 30px 0px;
+    font-family: Arial;
+    font-size: 50px;
+    color: #111;
+    line-height: 44px;
+}
+
+.wrapper #confirmButton {
+    float: left;
+}
+
+.wrapper #cancelButton {
+    float: left;
+    background-color: red;
+    margin: 0px 15px;
+}
+
+.wrapper ul {
+    display: block;  /* Remove bullet points; allow greater control of positioning */
+    padding: 10px 10px 0px;
+    margin: 0;       /* Override defaults for lists */
+    width: 100%;     /* Get the row full width */
+}
+
+.wrapper li {
+    font-family: Arial;
+    padding: 10px 10px 10px;
+    display: inline-block; /* Get all images to show in a row */
+    width: 100%;
+}
+
+/* CSS settings of the iPad screen */
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        width: 600px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
+
+    .wrapper #confirmButton {
+        float: right;
+    }
+
+    .wrapper #cancelButton {
+        float: right;
+    }
+
+    .wrapper li {
+        width: 115%;
+    }
+}
+
+/* CSS settings of the PC screen */
+@media only screen and (min-width: 1000px) {
+    .wrapper {
+        width: 1000px;
+        margin-left: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
+
+    .wrapper #confirmButton {
+        float: right;
+    }
+
+    .wrapper #cancelButton {
+        float: right;
+    }
+
+    .wrapper li {
+        width: 125%;
+    }
+}

@@ -1,32 +1,58 @@
+/* CSS general setting and in particular of the smartphone screen */
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
+
 body{
-    background: rgb(219, 226, 226);
-}
-.row{
     background: white;
-    border-radius: 30px;
-    box-shadow: 12px 12px 22px grey;
 }
+
+.wrapper {
+    width: 100%;
+}
+
+.wrapper h2 {
+    padding: 30px 30px 0px;
+    font-family: Arial;
+    font-size: 50px;
+    color: #111;
+    line-height: 44px;
+}
+
 img{
+    float: right;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 }
-.btn1{
-    border: none;
-    outline: none;
-    height: 50px;
+
+.responsive {
     width: 100%;
-    background-color: black;
-    color: white;
-    border-radius: 4px;
-    font-weight: bold;
+    max-width: 400px;
+    height: auto;
 }
-.btn1:hover{
-    background: white;
-    border: 1px solid;
-    color: black;
+
+/* CSS settings of the iPad screen */
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        width: 600px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
+}
+
+/* CSS settings of the PC screen */
+@media only screen and (min-width: 1000px) {
+    .wrapper {
+        width: 1000px;
+        margin-left: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
 }

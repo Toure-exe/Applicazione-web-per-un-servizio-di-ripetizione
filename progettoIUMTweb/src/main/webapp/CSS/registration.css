@@ -1,49 +1,94 @@
+/* CSS general setting and in particular of the smartphone screen */
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
+
 body{
-    background: rgb(219, 226, 226);
-}
-.row{
     background: white;
-    border-radius: 30px;
-    box-shadow: 12px 12px 22px grey;
 }
+
+.wrapper {
+    width: 100%;
+}
+
+.wrapper h2 {
+    padding: 30px 30px 0px;
+    font-family: Arial;
+    font-size: 50px;
+    color: #111;
+    line-height: 44px;
+}
+
 img{
+    float: right;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 }
-.btn1{
-    border: none;
-    outline: none;
-    height: 50px;
+
+.responsive {
     width: 100%;
-    background-color: black;
-    color: white;
-    border-radius: 4px;
-    font-weight: bold;
+    max-width: 700px;
+    height: auto;
 }
-.btn1:hover{
-    background: white;
-    border: 1px solid;
-    color: black;
+
+.wrapper form {
+    padding: 0px 30px 0px;
 }
-#msg1{
-    position: relative;
-    bottom: -5px;
-    color: black;
-    font-size: 15px;
-    display: none;
+
+.wrapper input {
+    width: 300px;
 }
-::placeholder{
-    font-size: 15px;
+
+/* CSS settings of the iPad screen */
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        width: 600px;
+        margin-left: 40px;
+        margin-right: 20px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 30px 0px;
+    }
+
+    .responsive {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+    }
+
+    .wrapper form {
+        padding: 0px 30px 0px;
+    }
+
+    .wrapper input {
+        width: 350px;
+    }
 }
-#msg2{
-    position: relative;
-    bottom: -5px;
-    color: black;
-    font-size: 15px;
-    display: none;
+
+/* CSS settings of the PC screen */
+@media only screen and (min-width: 1000px) {
+    .wrapper {
+        width: 1300px;
+        margin-left: 40px;
+    }
+
+    .wrapper h2 {
+        padding: 30px 0px 0px;
+    }
+
+    .responsive {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+    }
+
+    .wrapper form {
+        padding: 0px 0px 0px;
+    }
+
+    .wrapper input {
+        width: 500px;
+    }
 }

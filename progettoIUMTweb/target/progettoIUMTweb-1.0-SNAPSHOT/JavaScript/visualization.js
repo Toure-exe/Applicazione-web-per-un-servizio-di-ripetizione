@@ -208,13 +208,13 @@ $(document).ready(function () {
                 if (els.rows[row_index].cells[col_index].style.background !== "red") {
                     var day = (document.getElementById('table').rows[row_index].cells[0]).innerHTML;
                     var hour = (document.getElementById('table').rows[row_index].cells[col_index]).innerHTML;
-                    var res = "Hai selezionato, giorno: " + day + " ore: " + hour;
+                    var res = "You are selected: \nDay: " + day + "\n Hour: " + hour;
                     app1.printInfo(res);
                     app.showButton();
                     app1.rowSelected = day;
                     app1.columnSelected = hour;
                 } else {
-                    var res = "Hai selezionato una prenotazione non disponibile!";
+                    var res = "This booking is not available!";
                     app1.printInfo(res);
                     app.hideButton();
                 }

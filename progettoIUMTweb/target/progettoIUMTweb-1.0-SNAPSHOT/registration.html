@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
@@ -14,47 +16,28 @@
 
 </head>
 <body>
-    <section class="Form my-4 mx-5">
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-lg-5">
-                    <img src="img/registration.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-7 px-5 pt-5">
-                    <h1 class="font-weight-bold py-3">Registration</h1>
-                    <form action="/progettoIUMTweb_war_exploded/MainServlet" method="post">
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <h7>Insert an email</h7>
-                                <input type="email" name="email" placeholder="Email-Address" class="form-control my-3 p-4" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <h7>Insert a password</h7>
-                                <input type="password" onkeydown="passwordCheck()" id="password" name="password" placeholder="Password" class="form-control" required>
-                                <p id="msg1">The password is <span id="strength"></span></p>
-                            </div>
 
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <h7>Repeat password</h7>
-                                <input type="password" onkeydown="equalsPassword()" id="rPassword" name="rPassword" placeholder="Password" class="form-control" required>
-                                <p id="msg2"><span id="equals"></span></p>
-                            </div>
+<div class="wrapper">
+    <img src="img/registration.jpg" class="responsive" alt="">
+    <h2 class="font-weight-bold py-3">Registration</h2>
 
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <button type="submit" name="submit" value="registration" class="btn1 mt-3 mb-5">Register</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    <form action="/progettoIUMTweb_war_exploded/MainServlet" method="post">
+
+        <h7>Insert an email</h7>
+        <input type="email" name="email" placeholder="Email-Address" class="form-control" required>
+
+        <h7>Insert a password</h7>
+        <input type="password" onkeydown="passwordCheck()" id="password" name="password" placeholder="Password" class="form-control" required>
+        <p id="msg1">The password is <span id="strength"></span></p>
+
+        <h7>Repeat password</h7>
+        <input type="password" onkeydown="equalsPassword()" id="rPassword" name="rPassword" placeholder="Password" class="form-control" required>
+        <p id="msg2"><span id="equals"></span></p>
+
+        <button type="submit" name="submit" value="registration" class="btn btn-primary">Register</button>
+
+    </form>
+</div>
 
 </body>
 </html>

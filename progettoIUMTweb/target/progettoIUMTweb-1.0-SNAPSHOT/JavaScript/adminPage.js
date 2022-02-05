@@ -167,7 +167,7 @@ $(document).ready(function () {
     });
 
     $("#subjectSelected4").change(function(){
-        if ($('#subjectSelected4').find(":selected").text() !== "Seleziona la materia") {
+        if ($('#subjectSelected4').find(":selected").text() !== "Select a subject") {
             app.getTeachers($('#subjectSelected4').find(":selected").text());
         } else
             app.teachers = [];

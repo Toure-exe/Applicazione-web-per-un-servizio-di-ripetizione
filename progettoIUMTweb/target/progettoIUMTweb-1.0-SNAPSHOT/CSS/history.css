@@ -20,16 +20,9 @@ body{
     line-height: 44px;
 }
 
-img{
-    float: right;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-}
-
-.responsive {
+.wrapper table {
     width: 100%;
-    max-width: 400px;
-    height: auto;
+    margin-top: 20px;
 }
 
 /* CSS settings of the iPad screen */
@@ -43,6 +36,11 @@ img{
     .wrapper h2 {
         padding: 30px 0px 0px;
     }
+
+    .wrapper table {
+        width: 100%;
+        margin-top: 20px;
+    }
 }
 
 /* CSS settings of the PC screen */
@@ -54,5 +52,10 @@ img{
 
     .wrapper h2 {
         padding: 30px 0px 0px;
+    }
+
+    .wrapper table {
+        width: 100%;
+        margin-top: 20px;
     }
 }

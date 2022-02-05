@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Private Lessons</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -16,56 +17,34 @@
     <script src="JavaScript/index.js"></script>
 </head>
 <body>
+
+<div class="wrapper">
     <section id="sessionID" class="Form my-4 mx-5">
-        <div class="container">
-            <div class="row no-gutters">
-                <div  class="col-lg-5">
-                    <img src="img/index.png" class="img-fluid" alt="">
-                    <p class="font-weight-bold py-3">{{ session }}</p>
-                    <span @click="logout" v-if="student || admin"><button type="button" class="btn btn-primary">Logout</button></span>
-                </div>
-                <div class="col-lg-7 px-5 pt-5">
-                    <h1 class="font-weight-bold py-3">Online Private Lessons</h1>
-                    <form method="post">
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <span v-if="guest"><a href="login.html"><button type="button" class="btn btn-primary">Login</button></a></span>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <span v-if="guest"><a href="registration.html"><button type="button" class="btn btn-primary">Registration</button></a></span>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <a href="visualization.html"><span v-if="guest || student || admin"><button type="button" class="btn btn-primary">Booking tutoring available</button></span></a>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <a href="activeTutoring.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">Active tutorings</button></span></a>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <a href="history.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span></a>
-                            </div>
-                        </div>
-                        <h4></h4>
-                        <div class="form-row">
-                            <div class="col-lg-7">
-                                <a href="adminPage.html"><span v-if="admin"><button type="button" class="btn btn-primary">Admin actions</button></span></a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
+        <img src="img/index.png" class="responsive" alt="">
+        <h2 class="font-weight-bold py-3">Online Private Lessons</h2>
+
+        <form method="post">
+
+            <span v-if="guest"><a href="login.html"><button type="button" class="btn btn-primary">Login</button></a></span>
+            <h4></h4>
+            <span v-if="guest"><a href="registration.html"><button type="button" class="btn btn-primary">Registration</button></a></span>
+            <h4></h4>
+            <a href="visualization.html"><span v-if="guest || student || admin"><button type="button" class="btn btn-primary">Booking tutoring available</button></span></a>
+            <h4></h4>
+            <a href="activeTutoring.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">Active tutorings</button></span></a>
+            <h4></h4>
+            <a href="history.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span></a>
+            <h4></h4>
+            <a href="adminPage.html"><span v-if="admin"><button type="button" class="btn btn-primary">Admin actions</button></span></a>
+            <h4></h4>
+            <p class="font-weight-bold py-3">{{ session }}</p>
+            <span @click="logout" v-if="student || admin"><button type="button" class="btn btn-primary">Logout</button></span>
+
+        </form>
+
     </section>
+</div>
+
 </body>
 </html>
