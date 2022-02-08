@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class DAO {
     private String url;
@@ -31,6 +32,7 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
 
             Statement st = conn1.createStatement();
+            password = encryptSHA2(password);
             String query = "INSERT INTO Utente (emailUtente, password, ruolo) VALUES ('"+email+"', '"+password+"', '"+role+"');";
             System.out.println(query);
             st.executeUpdate(query);
@@ -55,7 +57,9 @@ public class DAO {
             conn1 = DriverManager.getConnection(url, user, pwd);
             if (conn1 != null)
                 System.out.println("Connected to the database PiattaformaRipetizioni");
+
             Statement st = conn1.createStatement();
+            password = encryptSHA2(password);
             String query = "SELECT * FROM Utente WHERE emailUtente='"+ email +"' AND password='"+ password +"';";
             System.out.println(query);
             ResultSet rs = st.executeQuery(query);
@@ -691,6 +695,11 @@ public class DAO {
                 }
             }
         }
+    }
+
+    public static String encryptSHA2(String plaintext){
+        String key = DigestUtils.sha256Hex(plaintext).toUpperCase();
+        return key;
     }
 
 }

@@ -9,7 +9,7 @@
         <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
-    <root id="archive" name="progettoIUMTweb_war.war">
+    <root id="archive" name="progettoIUMTweb-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="progettoIUMTweb:war exploded" />
     </root>
   </artifact>

@@ -5,45 +5,389 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Private Lessons</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-          crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="CSS/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/login.css">
+    <link rel="stylesheet" href="CSS/registration.css">
+    <link rel="stylesheet" href="CSS/visualization.css">
+    <link rel="stylesheet" href="CSS/history.css">
+    <link rel="stylesheet" href="CSS/activeTutoring.css">
+    <link rel="stylesheet" href="CSS/adminPage.css">
+
     <script src="JavaScript/index.js"></script>
+    <script src="JavaScript/registration.js"></script>
+    <script src="JavaScript/visualization.js"></script>
 </head>
 <body>
 
-<div class="wrapper">
-    <section id="sessionID" class="Form my-4 mx-5">
+<div id="sessionID" class="wrapper">
 
-        <img src="img/index.png" class="responsive" alt="">
-        <h2 class="font-weight-bold py-3">Online Private Lessons</h2>
+    <div v-if="index">
+        <section class="Form my-4 mx-5">
+
+            <img src="img/index.png" class="responsive" alt="">
+            <h2 class="font-weight-bold py-3">Online Private Lessons</h2>
+
+            <form method="post">
+
+                <span @click="goLogin" v-if="guest"><button type="button" class="btn btn-primary">Login</button></span>
+                <h4></h4>
+                <span @click="goRegistration" v-if="guest"><button type="button" class="btn btn-primary">Registration</button></span>
+                <h4></h4>
+                <span @click="goAvailable" v-if="guest || student || admin"><button type="button" class="btn btn-primary">Booking tutoring available</button></span>
+                <h4></h4>
+                <span @click="goActive" v-if="student || admin"><button type="button" class="btn btn-primary">Active tutorings</button></span>
+                <h4></h4>
+                <span @click="goHistory" v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span>
+                <h4></h4>
+                <span @click="goAdmin" v-if="admin"><button type="button" class="btn btn-primary">Admin actions</button></span>
+                <h4></h4>
+                <p class="font-weight-bold py-3">{{ session }}</p>
+                <span @click="logout" v-if="student || admin"><button type="button" class="btn btn-primary">Logout</button></span>
+
+            </form>
+
+        </section>
+    </div>
+
+    <div v-if="login">
+        <!-- LOGIN PAGE -->
+        <img src="img/login.png" class="responsive" alt="">
+        <h2 class="font-weight-bold py-3">Login</h2>
+        <p class="styleInfo">Sign into your account</p>
 
         <form method="post">
 
-            <span v-if="guest"><a href="login.html"><button type="button" class="btn btn-primary">Login</button></a></span>
-            <h4></h4>
-            <span v-if="guest"><a href="registration.html"><button type="button" class="btn btn-primary">Registration</button></a></span>
-            <h4></h4>
-            <a href="visualization.html"><span v-if="guest || student || admin"><button type="button" class="btn btn-primary">Booking tutoring available</button></span></a>
-            <h4></h4>
-            <a href="activeTutoring.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">Active tutorings</button></span></a>
-            <h4></h4>
-            <a href="history.html"><span v-if="student || admin"><button type="button" class="btn btn-primary">History booking</button></span></a>
-            <h4></h4>
-            <a href="adminPage.html"><span v-if="admin"><button type="button" class="btn btn-primary">Admin actions</button></span></a>
-            <h4></h4>
-            <p class="font-weight-bold py-3">{{ session }}</p>
-            <span @click="logout" v-if="student || admin"><button type="button" class="btn btn-primary">Logout</button></span>
+            <input id="email" type="email" name="email" placeholder="Email-Address" class="form-control my-3 p-4" required>
+            <input id="psw" type="password" name="password" placeholder="Password" class="form-control my-3 p-4" required>
+            <button id="loginButton" type="submit" name="submit" value="login" class="btn btn-primary">Login</button>
+            <br>
+            <br>
+            <p>Don't have an account? <button @click="goRegistration" class="btn btn-primary">Register here</button></p>
 
         </form>
+        <button @click="goIndex" class="btn btn-primary">Back</button>
+    </div>
 
-    </section>
+    <div v-if="registration">
+        <!-- REGISTRATION PAGE -->
+        <img src="img/registration.jpg" class="responsive" alt="">
+        <h2 class="font-weight-bold py-3">Registration</h2>
+
+        <form method="post">
+
+            <h7>Insert an email</h7>
+            <input type="email" name="email" id="emailRegistration" placeholder="Email-Address" class="form-control" required>
+
+            <h7>Insert a password</h7>
+            <input type="password" onkeydown="passwordCheck()" id="password" name="password" placeholder="Password" class="form-control" required>
+            <p id="msg1">The password is <span id="strength"></span></p>
+
+            <h7>Repeat password</h7>
+            <input type="password" onkeydown="equalsPassword()" id="rPassword" name="rPassword" placeholder="Password" class="form-control" required>
+            <p id="msg2"><span id="equals"></span></p>
+
+            <button type="submit" name="submit" id="registration" value="registration" class="btn btn-primary">Register</button>
+            <button @click="goIndex" class="btn btn-primary">Back</button>
+        </form>
+    </div>
+
+    <div v-if="visualization">
+        <h2>View/Booking Tutoring</h2>
+
+        <div id="subjectsVisualization">
+            <select id="subjectSelected" aria-label=".form-select-lg example">
+                <option selected>Select a subject</option>
+                <option v-for="subject in subjects"> {{subject}} </option>
+            </select>
+            <button v-if="(student || admin) && available" id="actionBook" class="btn btn-primary" type="button"> Book </button>
+        </div>
+
+        <div id="teachersVisualization">
+            <select id="teacherSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected>Select a teacher</option>
+                <option v-for="teacher in teachers"> {{teacher}} </option>
+            </select>
+
+            <table id="table"  class="table table-striped">
+                <tr>
+                    <td>Monday</td>
+                    <td>15-16</td>
+                    <td>16-17</td>
+                    <td>17-18</td>
+                    <td>18-19</td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td>15-16</td>
+                    <td>16-17</td>
+                    <td>17-18</td>
+                    <td>18-19</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>15-16</td>
+                    <td>16-17</td>
+                    <td>17-18</td>
+                    <td>18-19</td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td>15-16</td>
+                    <td>16-17</td>
+                    <td>17-18</td>
+                    <td>18-19</td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td>15-16</td>
+                    <td>16-17</td>
+                    <td>17-18</td>
+                    <td>18-19</td>
+                </tr>
+            </table>
+            <p>{{bookingMessage}}</p>
+
+        </div>
+        <button @click="goIndex" class="btn btn-primary">Back</button>
+    </div>
+
+    <div v-if="history">
+
+        <h2>History booking</h2>
+        <button @click="goIndex" class="btn btn-primary">Back</button>
+        <div v-if="admin">
+            <select id="restrictionSelected" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option selected>All bookings</option>
+                <option>Active bookings</option>
+                <option>Confirmed bookings</option>
+                <option >Cancelled bookings</option>
+            </select>
+
+            <table id="tableAdmin" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+                    <th>Student</th>
+                    <th>Date</th>
+                    <th>Hour</th>
+                    <th>State</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="history in histories">
+                    <td>{{ history.subject }}</td>
+                    <td>{{ history.teacher }}</td>
+                    <td>{{ history.student }}</td>
+                    <td>{{ history.date }}</td>
+                    <td>{{ history.hour }}</td>
+                    <td v-if="history.status === 0"> In corso</td>
+                    <td v-if="history.status === 1"> Avvenuta</td>
+                    <td v-if="history.status === 2"> Cancellata</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div v-if="student">
+            <table id="tableStudent" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+                    <th>Date</th>
+                    <th>Hour</th>
+                    <th>State</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="history in histories">
+                    <td>{{ history.subject }}</td>
+                    <td>{{ history.teacher }}</td>
+                    <td>{{ history.date }}</td>
+                    <td>{{ history.hour }}</td>
+                    <td v-if="history.status === 0"> In corso</td>
+                    <td v-if="history.status === 1"> Avvenuta</td>
+                    <td v-if="history.status === 2"> Cancellata</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div v-if="activeTutoring">
+
+        <h2>Tutoring</h2>
+        <button @click="goIndex" class="btn btn-primary">Back</button>
+        <ul class="list-group">
+            <li v-if="student" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}
+                <button id="confirmButton" class="btn btn-primary" type="button"> Confirm </button>
+                <button id="cancelButton" class="btn btn-primary" type="button"> Cancel </button>
+            </li>
+            <li v-if="admin" v-for="tutoring in tutorings" class="list-group-item">{{tutoring.subject}}, {{tutoring.teacher}}, {{tutoring.date}}, {{tutoring.hour}}, {{tutoring.student}}
+                <button id="cancelButtonAdmin" class="btn btn-primary" type="button" style="float: right"> Disdici prenotazione </button>
+            </li>
+        </ul>
+
+    </div>
+
+    <div v-if="adminPage" id="accordion">
+
+        <h2>Admin page</h2>
+        <button @click="goIndex" class="btn btn-primary">Back</button>
+        <div class="card" id="styleFirstOne">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Add a teacher in the system
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- form inserimento docente -->
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" id="formInputNome" placeholder="Teacher's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cognome</label>
+                        <input type="text" class="form-control" id="formInputCognome" placeholder="Teacher's surname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="formInputEmail" placeholder="Teacher's email" required>
+                    </div>
+                    <button id="invioDatiDocente" class="btn btn-primary">Insert the teacher</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button id="sectionDeleteTeacher" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Delete a teacher from the system
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- lista docenti con bottone elimina -->
+                    <select id="subjectSelected2" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Restrict by subjects</option>
+                        <option>All</option>
+                        <option v-for="subject in subjects">{{subject}}</option>
+                    </select>
+                    <ul id="listTeachers" class="list-group">
+                        <li v-for="teacher in teachers" class="list-group-item">{{teacher}}
+                            <button id="confirmDeleteButton" class="btn btn-primary" type="button" style="float: right"> Delete </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button id="sectionInsertAssociation" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Add a Course-Teacher association in the system
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- select inserimento associazione corso-docente -->
+                    <select id="teacherSelected3" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Select a teacher</option>
+                        <option v-for="teacher in teachers"> {{teacher}} </option>
+                    </select>
+
+                    <select id="subjectSelected3" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Select a subject</option>
+                        <option v-for="subject in subjects"> {{subject}} </option>
+                    </select>
+                    <button id="confirmAssociationButton" class="btn btn-primary" type="button" style="float: right"> Confirm association </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                    <button id="sectionDeleteAssociation" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Delete a Course-Teacher association from the system
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- eliminazione associazione corso-docente -->
+                    <p>Select a subject (necessary)</p>
+                    <select id="subjectSelected4" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Select a subject</option>
+                        <option v-for="subject in subjects"> {{subject}} </option>
+                    </select>
+                    <ul id="listAssociatedTeachers" class="list-group">
+                        <li v-for="teacher in teachers" class="list-group-item">{{teacher}}
+                            <button id="confirmDeleteAssociation" class="btn btn-primary" type="button" style="float: right"> Delete </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h5 class="mb-0">
+                    <button id="sectionInsertCourse" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Add a course in the system
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Subject's name</label>
+                            <input type="text" class="form-control" id="formInputCorso" placeholder="Subject's name" required>
+                        </div>
+                        <button id="invioNomeCorso" class="btn btn-primary">Insert the course</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingSix">
+                <h5 class="mb-0">
+                    <button id="sectionDeleteCourse" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        Delete a course from the system
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                <div class="card-body">
+                    <ul id="listCourse" class="list-group">
+                        <li v-for="subject in subjects" class="list-group-item">{{subject}}
+                            <button id="confirmDeleteCourse" class="btn btn-primary" type="button" style="float: right"> Elimina </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 </body>

@@ -108,19 +108,14 @@ public class MainServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             System.out.println("ENTRA1");
             String act = request.getParameter("submit");
-            String email, password, rPassword, name, surname;
+            String email, password, name, surname;
             System.out.println(act);
             switch(act) {
                 case "registration":
                     email = request.getParameter("email");
                     password = request.getParameter("password");
-                    rPassword = request.getParameter("rPassword");
-                    if (password.equals(rPassword)){
-                        dao.insertStudent(email, password, 1);
-                        System.out.println("Student correctly insert in the system");
-                    } else {
-                        out.println("The password are not equal");
-                    }
+                    dao.insertStudent(email, password, 1);
+                    System.out.println("Student correctly insert in the system");
                     break;
 
                 case "insertTeacher":

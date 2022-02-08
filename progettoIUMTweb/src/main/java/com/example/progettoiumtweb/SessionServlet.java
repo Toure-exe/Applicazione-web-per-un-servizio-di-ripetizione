@@ -156,7 +156,6 @@ public class SessionServlet extends HttpServlet {
                         else
                             out.print("false");
                     }
-
                     break;
 
                 default:
