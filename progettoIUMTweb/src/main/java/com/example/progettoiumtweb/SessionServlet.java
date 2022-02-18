@@ -179,10 +179,11 @@ public class SessionServlet extends HttpServlet {
     }
 
     public void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         session.invalidate();
         session = null;
-        out.print("logout");
+        Gson gson = new Gson();
+        out.print(gson.toJson("logout"));
     }
 }

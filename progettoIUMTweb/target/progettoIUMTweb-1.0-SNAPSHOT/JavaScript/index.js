@@ -147,6 +147,8 @@ $(document).ready(function () {
                 this.adminPage = true;
             },
             goIndex: function () {
+                this.subjects = [];
+                this.teachers = [];
                 this.sessionFunction();
                 this.index = true;
                 this.login = false;
@@ -474,6 +476,7 @@ $(document).ready(function () {
                     success: function() {
                         alert("Association " + elem[2] + " - " + subject + " correctly deleted");
                         $('.collapse').collapse('hide');
+                        $('#subjectSelected4').prop('selectedIndex',0);
                         return false;
                     }
                 });
@@ -568,7 +571,7 @@ $(document).ready(function () {
                 if (els.rows[row_index].cells[col_index].style.background !== "red") {
                     var day = (document.getElementById('table').rows[row_index].cells[0]).innerHTML;
                     var hour = (document.getElementById('table').rows[row_index].cells[col_index]).innerHTML;
-                    var res = "You are selected: \nDay: " + day + "\n Hour: " + hour;
+                    var res = "You have selected: \nDay: " + day + "\n Hour: " + hour;
                     app.printInfo(res);
                     app.showButton();
                     app.rowSelected = day;
