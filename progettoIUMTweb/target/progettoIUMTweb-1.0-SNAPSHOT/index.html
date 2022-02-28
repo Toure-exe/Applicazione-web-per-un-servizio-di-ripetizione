@@ -98,7 +98,7 @@
     </div>
 
     <div v-if="visualization">
-        <h2>View/Booking Tutoring</h2>
+        <h2>Book a Tutoring</h2>
 
         <div id="subjectsVisualization">
             <select id="subjectSelected" aria-label=".form-select-lg example">
@@ -187,9 +187,9 @@
                     <td>{{ history.student }}</td>
                     <td>{{ history.date }}</td>
                     <td>{{ history.hour }}</td>
-                    <td v-if="history.status === 0"> In corso</td>
-                    <td v-if="history.status === 1"> Avvenuta</td>
-                    <td v-if="history.status === 2"> Cancellata</td>
+                    <td v-if="history.status === 0"> On going</td>
+                    <td v-if="history.status === 1"> Confirmed</td>
+                    <td v-if="history.status === 2"> Deleted</td>
                 </tr>
                 </tbody>
             </table>

@@ -42,9 +42,9 @@ public class SessionServlet extends HttpServlet {
                     response.setContentType("text/html;charset=UTF-8");
                     subject = request.getParameter("subject");
                     teacher = request.getParameter("teacher");
-                    System.out.println("SESSIONSERVLET: "+ teacher);
                     day = request.getParameter("day");
                     hour = request.getParameter("hour");
+                    System.out.println("SESSIONSERVLET: "+ teacher + " "+hour+" "+subject);
                     if (dao.insertBooking(subject, teacher, day, hour, emailUser))
                         out.print("true");
                     else

@@ -164,7 +164,7 @@ public class DAO {
     public ArrayList<Tutoring> getTutoringsList (String subject, String teacher) {
         ArrayList<Tutoring> res = new ArrayList<>();
         String[] subjectSplit = subject.split(" "); //use only [1]
-        String[] TeacherSplit = teacher.split(" "); //use [1] for name, [3] for surnmane
+        String[] TeacherSplit = teacher.split(" "); //use [1] for name, [2] for surnmane
         Connection conn1 = null;
         try {
             conn1 = DriverManager.getConnection(url, user, pwd);
