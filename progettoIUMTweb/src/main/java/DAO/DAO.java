@@ -24,8 +24,9 @@ public class DAO {
         }
     }
 
-    public void insertStudent(String email, String password, int role) {
+    public boolean insertStudent(String email, String password, int role) {
         Connection conn1 = null;
+        boolean res = false;
         try {
             conn1 = DriverManager.getConnection(url, user, pwd);
             if (conn1 != null)
@@ -36,6 +37,7 @@ public class DAO {
             String query = "INSERT INTO Utente (emailUtente, password, ruolo) VALUES ('"+email+"', '"+password+"', '"+role+"');";
             System.out.println(query);
             st.executeUpdate(query);
+            res = true;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -48,6 +50,7 @@ public class DAO {
                 }
             }
         }
+        return res;
     }
 
     public int searchUser(String email, String password) {

@@ -109,12 +109,17 @@ public class MainServlet extends HttpServlet {
             System.out.println("ENTRA1");
             String act = request.getParameter("submit");
             String email, password, name, surname;
+            Gson gson = new Gson();
             System.out.println(act);
             switch(act) {
                 case "registration":
+                    response.setContentType("application/json");
                     email = request.getParameter("email");
                     password = request.getParameter("password");
-                    dao.insertStudent(email, password, 1);
+                    if(dao.insertStudent(email, password, 1))
+                        out.print(gson.toJson("ok"));
+                    else
+                        out.print(gson.toJson("error"));
                     System.out.println("Student correctly insert in the system");
                     break;
 
