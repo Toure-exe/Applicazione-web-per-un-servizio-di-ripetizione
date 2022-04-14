@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+.wrapper #restrictionSelected{
+    margin-top: 10px;
+}
+
 body{
     background: white;
 }

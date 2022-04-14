@@ -125,6 +125,10 @@ $(document).ready(function () {
                 this.adminPage = false;
                 this.getRoleSession();
                 this.getTutorings();
+                if (this.tutorings.length === 0) {
+                    alert("The tutoring list is empty");
+                    this.goIndex();
+                }
             },
             goHistory: function () {
                 this.index = false;
@@ -136,6 +140,10 @@ $(document).ready(function () {
                 this.adminPage = false;
                 this.getRoleSession();
                 this.getHistory();
+                if (this.histories.length === 0) {
+                    alert("The history list is empty");
+                    this.goIndex();
+                }
             },
             goAdmin: function () {
                 this.index = false;
@@ -507,9 +515,14 @@ $(document).ready(function () {
                         type: "POST", // data type (can be get, post, put, delete)
                         data : {submit: "registration", email: email, password: pass}, // data in json format
                         async : false, // enable or disable async (optional, but suggested as false if you need to populate data afterwards)
-                        success: function() {
-                            alert("User correctly inserted in the system");
-                            self.goIndex();
+                        success: function(data) {
+                            if (data === "ok") {
+                                alert("User correctly inserted in the system");
+                                self.goIndex();
+                            } else {
+                                alert("Error, user already exists");
+                                event.preventDefault();
+                            }
                             return false;
                         }
                     });
@@ -763,5 +776,9 @@ $(document).ready(function () {
     $("#sessionID").on('click', '#registration', function (event) {
         app.registrationUser(event);
     });
+
+    $("#formInsertTeacher").on('submit',function (e) {
+        alert(test);
+    })
 
 });

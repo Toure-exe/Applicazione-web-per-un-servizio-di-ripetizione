@@ -69,9 +69,8 @@
             <br>
             <br>
             <p>Don't have an account? <button @click="goRegistration" class="btn btn-primary">Register here</button></p>
-
+            <button @click="goIndex" class="btn btn-primary">Back</button>
         </form>
-        <button @click="goIndex" class="btn btn-primary">Back</button>
     </div>
 
     <div v-if="registration">
@@ -98,6 +97,7 @@
     </div>
 
     <div v-if="visualization">
+        <!-- PAGE BOOK A TUTORING -->
         <h2>Book a Tutoring</h2>
 
         <div id="subjectsVisualization">
@@ -105,7 +105,6 @@
                 <option selected>Select a subject</option>
                 <option v-for="subject in subjects"> {{subject}} </option>
             </select>
-            <button v-if="(student || admin) && available" id="actionBook" class="btn btn-primary" type="button"> Book </button>
         </div>
 
         <div id="teachersVisualization">
@@ -113,6 +112,9 @@
                 <option selected>Select a teacher</option>
                 <option v-for="teacher in teachers"> {{teacher}} </option>
             </select>
+            <br>
+            <button v-if="(student || admin) && available" id="actionBook" class="btn btn-primary" type="button"> Book </button>
+
 
             <table id="table"  class="table table-striped">
                 <tr>
@@ -154,7 +156,7 @@
             <p>{{bookingMessage}}</p>
 
         </div>
-        <button @click="goIndex" class="btn btn-primary">Back</button>
+        <button @click="goIndex" class="btn btn-primary" id="buttonBack">Back</button>
     </div>
 
     <div v-if="history">
@@ -166,7 +168,7 @@
                 <option selected>All bookings</option>
                 <option>Active bookings</option>
                 <option>Confirmed bookings</option>
-                <option >Cancelled bookings</option>
+                <option >Deleted bookings</option>
             </select>
 
             <table id="tableAdmin" class="table table-striped">
@@ -253,20 +255,22 @@
 
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
+                    
                     <!-- form inserimento docente -->
                     <div class="form-group">
                         <label>Nome</label>
-                        <input type="text" class="form-control" id="formInputNome" placeholder="Teacher's name" required>
+                        <input type="text" class="form-control" id="formInputNome" placeholder="Teacher's name" required />
                     </div>
                     <div class="form-group">
                         <label>Cognome</label>
-                        <input type="text" class="form-control" id="formInputCognome" placeholder="Teacher's surname" required>
+                        <input type="text" class="form-control" id="formInputCognome" placeholder="Teacher's surname" required />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" id="formInputEmail" placeholder="Teacher's email" required>
+                        <input type="email" class="form-control" id="formInputEmail" placeholder="Teacher's email" required />
                     </div>
                     <button id="invioDatiDocente" class="btn btn-primary">Insert the teacher</button>
+
                 </div>
             </div>
         </div>

@@ -32,8 +32,8 @@ body{
 
 .wrapper ul {
     display: block;  /* Remove bullet points; allow greater control of positioning */
-    padding: 10px 10px 0px;
-    margin: 0;       /* Override defaults for lists */
+    padding: 10px 0px 0px;
+    margin-left: 0px;       /* Override defaults for lists */
     width: 100%;     /* Get the row full width */
 }
 
@@ -89,6 +89,6 @@ body{
     }
 
     .wrapper li {
-        width: 125%;
+        width: 100%;
     }
 }
