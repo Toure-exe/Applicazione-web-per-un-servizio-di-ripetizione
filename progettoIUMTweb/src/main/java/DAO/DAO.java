@@ -35,7 +35,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             password = encryptSHA2(password);
             String query = "INSERT INTO Utente (emailUtente, password, ruolo) VALUES ('"+email+"', '"+password+"', '"+role+"');";
-            System.out.println(query);
             st.executeUpdate(query);
             res = true;
 
@@ -64,7 +63,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             password = encryptSHA2(password);
             String query = "SELECT * FROM Utente WHERE emailUtente='"+ email +"' AND password='"+ password +"';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst())
                 result = -1;
@@ -94,7 +92,6 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             String query = "SELECT NomeCorso FROM Corso;";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
@@ -118,7 +115,6 @@ public class DAO {
     }
 
     public ArrayList<String> getTeachers (String subject, String email) {
-        System.out.println("--------"+subject+"---------");
         ArrayList<String> res = new ArrayList<>();
         Connection conn1 = null;
         try {
@@ -127,13 +123,11 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             String query = "SELECT IDCorso FROM Corso WHERE NomeCorso ='"+subject+"';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.next()) //resultSet vuoto
                 return res;
             else {
                 query = "SELECT d.nome, d.cognome, d.emailDocente FROM Insegnamento as i JOIN Docente as d WHERE i.IDCorso = " + rs.getInt("IDCorso")+ " AND i.emailDocente = d.emailDocente;";
-                System.out.println(query);
                 rs = st.executeQuery(query);
                 if (!rs.isBeforeFirst()) //resultSet vuoto
                     return res;
@@ -151,7 +145,7 @@ public class DAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -174,9 +168,7 @@ public class DAO {
             if (conn1 != null)
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
-            System.out.println("100000000000");
             String query = "SELECT r.Giorno, r.Ora FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) JOIN Docente as d on (r.emailDocente=d.emailDocente) WHERE (SELECT IDCorso FROM Corso WHERE NomeCorso = '" + subjectSplit[1] + "') = r.IDCorso AND r.emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + TeacherSplit[1] + "' AND Cognome= '" + TeacherSplit[2] + "');";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
@@ -186,7 +178,7 @@ public class DAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -207,11 +199,10 @@ public class DAO {
             conn1 = DriverManager.getConnection(url, user, pwd);
             if (conn1 != null)
                 System.out.println("Connected to the database PiattaformaRipetizioni");
-            Statement st = conn1.createStatement();
 
+            Statement st = conn1.createStatement();
             //obtain the IDCourse from the name of the course, there is only one result
             query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + (subject.split(" "))[1] + "';";
-            System.out.println(query);
             rs = st.executeQuery(query);
             if (!rs.next()) //resultSet vuoto
                 return false;
@@ -219,11 +210,7 @@ public class DAO {
                 iDCourse = rs.getString("IDCorso");
 
             //obtain the email of the teacher from the name and surname of himself, there is only one email for each teacher
-            System.out.println(teacher);
-            System.out.println((teacher.split(" "))[0]);
-            System.out.println((teacher.split(" "))[1]);
             query = "SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[1] + "' AND Cognome='" + (teacher.split(" "))[2] + "';";
-            System.out.println(query);
             rs = st.executeQuery(query);
             if (!rs.next()) //resultSet vuoto
                 return false;
@@ -232,16 +219,14 @@ public class DAO {
 
             //insert the dates from the database, in Ripetizioni Table
             query = "INSERT INTO Ripetizione (Giorno, Ora, emailDocente, emailStudente, IDCorso) VALUES ('" + day + "', '" + hour + "', '" + emailTeacher + "', '" + emailUser + "', '" + iDCourse + "');";
-            System.out.println(query);
             st.executeUpdate(query);
 
             //insert the dates from the database, in Storico Table
             query = "INSERT INTO Storico (Data, Ora, emailDocente, emailStudente, IDCorso, Stato) VALUES ('" + day + "', '" + hour + "', '" + emailTeacher + "', '" + emailUser + "', '" + iDCourse + "', 0);";
-            System.out.println(query);
             st.executeUpdate(query);
 
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -251,7 +236,6 @@ public class DAO {
                 }
             }
         }
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
         return true;
     }
 
@@ -265,18 +249,16 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "SELECT c.NomeCorso FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) WHERE r.emailStudente = '" + email + "';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
             else {
                 while(rs.next()) {
-                    System.out.println(rs.getString("NomeCorso"));
                     res.add(rs.getString("NomeCorso"));
                 }
             }
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -302,7 +284,6 @@ public class DAO {
                 query = "SELECT c.NomeCorso, d.Nome, d.Cognome, r.Giorno, r.Ora FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) JOIN Docente as d on (r.emailDocente=d.emailDocente) WHERE r.emailStudente = '" + email + "';";
             else if (role == 2)
                 query = "SELECT c.NomeCorso, d.Nome, d.Cognome, r.Giorno, r.Ora, r.emailStudente FROM Corso as c JOIN Ripetizione as r on (c.IDCorso=r.IDCorso) JOIN Docente as d on (r.emailDocente=d.emailDocente);";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
@@ -318,7 +299,7 @@ public class DAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -340,25 +321,19 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.next()) //resultSet vuoto
                 return false;
             else idCorso = rs.getString("IDCorso");
 
-            System.out.println(idCorso);
-            System.out.println((teacher.split(" "))[0]);
-            System.out.println((teacher.split(" "))[1]);
             query = "DELETE FROM Ripetizione WHERE Giorno='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
-            System.out.println(query);
             st.executeUpdate(query);
 
             query = "UPDATE Storico SET Stato= 1 WHERE Data='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
-            System.out.println(query);
             st.executeUpdate(query);
 
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -380,25 +355,19 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.next()) //resultSet vuoto
                 return false;
             else idCorso = rs.getString("IDCorso");
 
-            System.out.println(idCorso);
-            System.out.println((teacher.split(" "))[0]);
-            System.out.println((teacher.split(" "))[1]);
             query = "DELETE FROM Ripetizione WHERE Giorno='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
-            System.out.println(query);
             st.executeUpdate(query);
 
             query = "UPDATE Storico SET Stato= 2 WHERE Data='" + day + "' AND Ora='" + hour + "' AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "') AND emailStudente='" + emailUtente + "' AND IDCorso=" + idCorso + ";";
-            System.out.println(query);
             st.executeUpdate(query);
 
         } catch (SQLException e) {
-            System.out.println("qui ci cadi"+e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (conn1 != null) {
                 try {
@@ -425,7 +394,6 @@ public class DAO {
             } else if (role == 2) { //admin
                 query = "SELECT c.NomeCorso, d.Nome, d.Cognome, s.emailStudente, s.Data, s.Ora, s.Stato FROM Storico as s JOIN Corso as c on (s.IDCorso=c.IDCorso) JOIN Docente as d on (s.EmailDocente=d.emailDocente);";
             }
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
@@ -462,7 +430,6 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "SELECT c.NomeCorso, d.Nome, d.Cognome, s.emailStudente, s.Data, s.Ora, s.Stato FROM Storico as s JOIN Corso as c on (s.IDCorso=c.IDCorso) JOIN Docente as d on (s.EmailDocente=d.emailDocente) WHERE s.Stato=" + status + ";";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.isBeforeFirst()) //resultSet vuoto
                 return res;
@@ -493,11 +460,9 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "SELECT * FROM Docente WHERE Nome='" + name + "' AND Cognome='" + surname + "' AND emailDocente='" + email + "';";
-            System.out.println(query);
             ResultSet rs = st.executeQuery(query);
             if (!rs.next()) { //empty resultSet, the teacher can be inserted into the database
                 query = "INSERT INTO Docente (emailDocente, Nome, Cognome) VALUES ('" + email + "', '" + name + "', '" + surname + "');";
-                System.out.println(query);
                 st.executeUpdate(query);
             } else //the teacher is already in the database
                 return false;
@@ -525,9 +490,7 @@ public class DAO {
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
             query = "DELETE FROM Docente WHERE Nome='" + name + "' AND Cognome='" + surname + "' AND emailDocente='" + email + "';";
-            System.out.println(query);
             st.executeUpdate(query);
-
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -612,28 +575,22 @@ public class DAO {
             if (conn1 != null)
                 System.out.println("Connected to the database PiattaformaRipetizioni");
             Statement st = conn1.createStatement();
-            System.out.println(teacher);
-            System.out.println(subject);
             query = "SELECT * FROM Insegnamento WHERE IDCorso=(SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "') AND emailDocente=(SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "');";
             ResultSet rs = st.executeQuery(query);
-            System.out.println(query);
             if (!rs.next()) { //resultSet vuoto
                 int idCorso; String emailDocente;
                 query = "SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "';";
                 rs = st.executeQuery(query);
-                System.out.println(query);
                 rs.next();
                 idCorso = rs.getInt("IDCorso");
 
                 query = "SELECT emailDocente FROM Docente WHERE Nome='" + (teacher.split(" "))[0] + "' AND Cognome='" + (teacher.split(" "))[1] + "';";
                 rs = st.executeQuery(query);
-                System.out.println(query);
                 rs.next();
                 emailDocente = rs.getString("emailDocente");
 
                 query = "INSERT INTO Insegnamento (IDCorso, emailDocente) VALUES (" + idCorso + ", '" + emailDocente + "')";
                 st.executeUpdate(query);
-                System.out.println(query);
             } else
                 return false;
         } catch (SQLException e) {
@@ -660,7 +617,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             query = "DELETE FROM Insegnamento WHERE emailDocente='" + email + "' AND IDCorso=(SELECT IDCorso FROM Corso WHERE NomeCorso='" + subject + "');";
             st.executeUpdate(query);
-            System.out.println(query);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -685,7 +641,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             query = "DELETE FROM Corso WHERE NomeCorso='" + subject + "';";
             st.executeUpdate(query);
-            System.out.println(query);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

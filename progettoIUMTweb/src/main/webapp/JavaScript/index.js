@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var app = new Vue ({
+    let app = new Vue ({
         el: '#sessionID',
         data: {
             role: '',

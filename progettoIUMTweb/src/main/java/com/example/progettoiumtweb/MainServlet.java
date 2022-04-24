@@ -27,7 +27,6 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("debug attuale1");
         String email = "";
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
@@ -38,13 +37,8 @@ public class MainServlet extends HttpServlet {
         String s;
         switch (act) {
             case "subjectAvailable":
-                System.out.println("debug attuale2");
                 result = dao.getSubjectAvailable();
-                System.out.println("debug attuale3");
                 s = gson.toJson(result);
-                System.out.println("debug attuale4");
-                System.out.println("STRINGA JSON " + s);
-                System.out.println("debug attuale5");
                 out.print(s);
                 break;
 
@@ -52,15 +46,12 @@ public class MainServlet extends HttpServlet {
                 email = request.getParameter("email");
                 result = dao.getTeachers(request.getParameter("subject"), email);
                 s = gson.toJson(result);
-                System.out.println("STRINGA JSON " + s);
                 out.print(s);
                 break;
 
             case "teacherAvailability":
-                System.out.println("Ci entri?");
                 tutorings = dao.getTutoringsList(request.getParameter("subject"), request.getParameter("teacher"));
                 s = gson.toJson(tutorings);
-                System.out.println("STRINGA JSON " + s);
                 out.print(s);
                 break;
 
@@ -78,7 +69,6 @@ public class MainServlet extends HttpServlet {
                 else
                     result = dao.getAllTeachers(false);
                 s = gson.toJson(result);
-                System.out.println("STRINGA JSON " + s);
                 out.print(s);
                 break;
 
@@ -96,7 +86,7 @@ public class MainServlet extends HttpServlet {
                 break;
 
             default:
-                System.out.println("Error.");
+                System.out.println("Switch error in doGet function.");
                 break;
         }
     }
@@ -104,9 +94,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("ENTRA");
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("ENTRA1");
             String act = request.getParameter("submit");
             String email, password, name, surname;
             Gson gson = new Gson();
@@ -145,7 +133,7 @@ public class MainServlet extends HttpServlet {
                     break;
 
                 default:
-                    System.out.println("Error.");
+                    System.out.println("Switch error in doPost function.");
                     break;
             }
         }

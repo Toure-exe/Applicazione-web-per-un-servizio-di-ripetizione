@@ -10,6 +10,17 @@ import java.util.ArrayList;
 import DAO.*;
 import com.google.gson.Gson;
 
+/*
+ USER: mario@rossi.it
+ PASSWORD: r
+
+ USER: luigi@bianchi.it
+ PASSWORD: l
+
+ ADMIN: admin@admin.it
+ PASSWORD: root
+ */
+
 @WebServlet(name = "SessionServlet", value = "/SessionServlet")
 public class SessionServlet extends HttpServlet {
     private HttpSession session;
@@ -32,7 +43,6 @@ public class SessionServlet extends HttpServlet {
             String act = request.getParameter("submit");
             String subject, teacher, day, hour, emailUser;
             emailUser = (String)session.getAttribute("email");
-            System.out.println("EMAIL UTENTE: "+emailUser);
             ArrayList<String> result;
             ArrayList<StudentTutoring> st;
             String s;
@@ -44,7 +54,6 @@ public class SessionServlet extends HttpServlet {
                     teacher = request.getParameter("teacher");
                     day = request.getParameter("day");
                     hour = request.getParameter("hour");
-                    System.out.println("SESSIONSERVLET: "+ teacher + " "+hour+" "+subject);
                     if (dao.insertBooking(subject, teacher, day, hour, emailUser))
                         out.print("true");
                     else
@@ -55,7 +64,6 @@ public class SessionServlet extends HttpServlet {
                     response.setContentType("application/json");
                     result = dao.getStudentSubject(emailUser);
                     s = gson.toJson(result);
-                    System.out.println("STRINGA JSON " + s);
                     out.print(s);
                     break;
 
@@ -63,7 +71,6 @@ public class SessionServlet extends HttpServlet {
                     response.setContentType("application/json");
                     st = dao.getStudentTutoring(emailUser, (int)session.getAttribute("role"));
                     s = gson.toJson(st);
-                    System.out.println("STRINGA JSON " + s);
                     out.print(s);
                     break;
 
@@ -79,7 +86,6 @@ public class SessionServlet extends HttpServlet {
                     response.setContentType("application/json");
                     st = dao.getHistory((int)session.getAttribute("role"), emailUser);
                     s = gson.toJson(st);
-                    System.out.println("STRINGA JSON " + s);
                     out.print(s);
                     break;
 
@@ -88,12 +94,11 @@ public class SessionServlet extends HttpServlet {
                     int status = Integer.parseInt(request.getParameter("status"));
                     st = dao.getRestrictedHistory(status);
                     s = gson.toJson(st);
-                    System.out.println("STRINGA JSON " + s);
                     out.print(s);
                     break;
 
                 default:
-                    System.out.println("Errore");
+                    System.out.println("Switch error in doGet function.");
                     break;
             }
         }
@@ -104,36 +109,30 @@ public class SessionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String act = request.getParameter("submit");
-            String email, password, rPassword;
+            String email, password;
             switch(act) {
                 case "login":
                     email = request.getParameter("email");
                     password = request.getParameter("password");
                     int result = dao.searchUser(email, password);
                     if (result >= 0 && result <= 2) {
-                        System.out.println("user found");
-                        out.println(1); //write the JSONArray to the response
+                        out.println(1);
                         processRequest(request, response, email, result);
-                    } else {
-                        System.out.println("User not found");
-                        out.println(0); //write the JSONArray to the response
-                    }
+                    } else
+                        out.println(0);
                     out.close();
                     break;
 
                 case "logout":
                     processLogout(request, response);
-                    System.out.println("logout");
+                    System.out.println("Logout");
                     break;
 
                 case "indexSession":
-                    System.out.println(session);
-                    if(session != null){
+                    if(session != null)
                         out.print("Welcome " + session.getAttribute("email"));
-                    } else {
+                    else
                         out.print("Welcome guest");
-                    }
-                    System.out.println("sessioneprova");
                     break;
 
                 case "getRoleSession":
@@ -144,7 +143,6 @@ public class SessionServlet extends HttpServlet {
                     break;
 
                 case "deleteTutoring":
-                    response.setContentType("text/html;charset=UTF-8");
                     if ((int)session.getAttribute("role") == 2) {
                         if (dao.deleteTutoring(request.getParameter("emailStudent"), request.getParameter("date"), request.getParameter("hour"), request.getParameter("teacher"), request.getParameter("subject"), (int)session.getAttribute("role")))
                             out.print("true");
@@ -159,23 +157,18 @@ public class SessionServlet extends HttpServlet {
                     break;
 
                 default:
-                    System.out.println("Error");
+                    System.out.println("Switch error in doPost function.");
                     break;
             }
         }
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response, String email, int role) throws ServletException, IOException {
-        System.out.println(role);
         session = request.getSession();
-        System.out.println(session);
-        System.out.println(email);
         if (email != null){
-            System.out.println("p4");
             session.setAttribute("email", email);
             session.setAttribute("role", role);
         }
-        System.out.println("p3");
     }
 
     public void processLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
