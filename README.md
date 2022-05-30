@@ -101,14 +101,14 @@ Requisiti generali dell’interfaccia utente (sia web che mobile):
     permettere all’utente di correggere i dati e ripetere l’operazione senza
     perdere i dati precedentemente inseriti (cioè, senza riempire d’accapo
     i moduli online). <br>
-    Requisiti specifici per l’interfaccia utente per il web:
-    - L’interfaccia web deve essere implementata come Single Page
-    Application utilizzando Vue.js e HTML5; Il layout delle pagine
-    dell’interfaccia utente deve essere specificato con CSS e deve essere
-    fluido.  <br>
-    - Il controllo dell’input utente lato client deve essere effettuato utilizzando i
-    tag di HTML5 e/o JavaScript.<br>
-    - Il backend dell’applicazione deve essere implementato in Java<br>
+    Requisiti specifici per l’interfaccia utente per il web: <br>
+      - L’interfaccia web deve essere implementata come Single Page
+      Application utilizzando Vue.js e HTML5; Il layout delle pagine
+      dell’interfaccia utente deve essere specificato con CSS e deve essere
+      fluido.  <br>
+      - Il controllo dell’input utente lato client deve essere effettuato utilizzando i
+      tag di HTML5 e/o JavaScript.<br>
+      - Il backend dell’applicazione deve essere implementato in Java<br>
 
 ### TODO: 
 done
