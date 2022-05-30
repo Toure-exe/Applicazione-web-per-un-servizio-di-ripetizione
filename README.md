@@ -89,12 +89,12 @@ inserire/rimuovere corsi in catalogo; ogni utente (tranne l’amministratore) de
 poter vedere solo le proprie ripetizioni e non quelle altrui.
 
 Requisiti generali dell’interfaccia utente (sia web che mobile):
- L’interfaccia utente deve essere:
+ L’interfaccia utente deve essere: <br>
     - Comprensibile (trasparenza). Per esempio, a fronte di errori, deve
     segnalare il problema; quando un’operazione viene eseguita con
     successo, deve visualizzare la conferma di esecuzione, a meno che la
     conferma non sia ridondante (in quanto il risultato si vede direttamente
-    sull’interfaccia utente).<br>
+    sull’interfaccia utente). <br>
     - Ragionevolmente efficiente per permettere all’utente di eseguire le
     operazioni con un numero minimo di click e di inserimenti di dati. <br>
     - In caso di errore durante l’inserimento di dati nelle form, l’interfaccia deve
