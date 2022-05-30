@@ -90,25 +90,25 @@ poter vedere solo le proprie ripetizioni e non quelle altrui.
 
 Requisiti generali dell’interfaccia utente (sia web che mobile):
  L’interfaccia utente deve essere:
-    o Comprensibile (trasparenza). Per esempio, a fronte di errori, deve
+    - Comprensibile (trasparenza). Per esempio, a fronte di errori, deve
     segnalare il problema; quando un’operazione viene eseguita con
     successo, deve visualizzare la conferma di esecuzione, a meno che la
     conferma non sia ridondante (in quanto il risultato si vede direttamente
-    sull’interfaccia utente).
-    o Ragionevolmente efficiente per permettere all’utente di eseguire le
-    operazioni con un numero minimo di click e di inserimenti di dati.
-    o In caso di errore durante l’inserimento di dati nelle form, l’interfaccia deve
+    sull’interfaccia utente).<br>
+    - Ragionevolmente efficiente per permettere all’utente di eseguire le
+    operazioni con un numero minimo di click e di inserimenti di dati. <br>
+    - In caso di errore durante l’inserimento di dati nelle form, l’interfaccia deve
     permettere all’utente di correggere i dati e ripetere l’operazione senza
     perdere i dati precedentemente inseriti (cioè, senza riempire d’accapo
-    i moduli online).
+    i moduli online). <br>
     Requisiti specifici per l’interfaccia utente per il web:
-    o L’interfaccia web deve essere implementata come Single Page
+    - L’interfaccia web deve essere implementata come Single Page
     Application utilizzando Vue.js e HTML5; Il layout delle pagine
     dell’interfaccia utente deve essere specificato con CSS e deve essere
-    fluido.
-    o Il controllo dell’input utente lato client deve essere effettuato utilizzando i
-    tag di HTML5 e/o JavaScript.
-    o Il backend dell’applicazione deve essere implementato in Java
+    fluido.  <br>
+    - Il controllo dell’input utente lato client deve essere effettuato utilizzando i
+    tag di HTML5 e/o JavaScript.<br>
+    - Il backend dell’applicazione deve essere implementato in Java<br>
 
 ### TODO: 
 done
