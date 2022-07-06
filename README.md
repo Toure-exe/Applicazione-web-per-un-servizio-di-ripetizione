@@ -109,6 +109,3 @@ Requisiti generali dell’interfaccia utente (sia web che mobile):
       - Il controllo dell’input utente lato client deve essere effettuato utilizzando i
       tag di HTML5 e/o JavaScript.<br>
       - Il backend dell’applicazione deve essere implementato in Java<br>
-
-### TODO: 
-done
